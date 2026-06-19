@@ -1,4 +1,3 @@
-```markdown
 # PRODUCT REQUIREMENT DOCUMENT
 
 ## AegisTrade AI: Multi-Agent Global Trade Compliance & EAR Enforcement Tribunal
@@ -924,7 +923,5 @@ Sistem AegisTrade AI dinyatakan memenuhi kriteria MVP jika:
 # 34. Penutup
 
 AegisTrade AI dirancang sebagai solusi pertahanan legalitas korporasi tingkat tinggi yang memanfaatkan kekuatan sejati dari arsitektur multi-agent otonom pada platform **Band SDK**. Dengan menggabungkan pemrosesan dokumen parameter teknis yang mendalam bersama penyaringan sanksi geopolitik yang dinamis, sistem ini mengubah proses birokrasi kepatuhan hukum perdagangan internasional yang lambat menjadi sistem sensor otonom yang instan, aman, transparan, dan akuntabel di level rantai pasok fisik perusahaan.
-
-```
 
 ```
