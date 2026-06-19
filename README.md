@@ -1,927 +1,1894 @@
-# PRODUCT REQUIREMENT DOCUMENT
+# AegisTrade AI — Revised Product Requirements Document (PRD)
 
-## AegisTrade AI: Multi-Agent Global Trade Compliance & EAR Enforcement Tribunal
-
-### Secure Multi-Agent Autonomous Trade Audit & Geopolitical Risk Mitigation System
-
----
-
-## Document Control
-
-| Item            | Keterangan                                                                         |
-| --------------- | ---------------------------------------------------------------------------------- |
-| Nama Produk     | AegisTrade AI                                                                      |
-| Platform        | Web Application Dashboard & Multi-Agent Network                                    |
-| Frontend        | React Vite, Tailwind CSS, Shadcn/UI, Context API                                  |
-| Backend         | Python FastAPI, Band SDK (`band.ai`), Codeband Framework                           |
-| Database        | MySQL (Laragon Environment)                                                        |
-| Mode Operasi    | Hybrid Cloud / On-Premise Enterprise Gateway                                       |
-| Prinsip Desain  | Secure-by-Design, EAR/OFAC Compliance Architecture, Traceable Multi-Agent Debates  |
-| Target Pengguna | Compliance Officer, Export Sales Managers, Logistics Teams, Executive Board        |
+**Product:** AegisTrade AI  
+**Tagline:** Adversarial Multi-Agent Compliance Tribunal for Global Export
+**Primary Goal:** Build a differentiated, defensible, demo-ready multi-agent enterprise workflow that uses Band as the core collaboration layer, not as a thin wrapper.
 
 ---
 
-# 1. Ringkasan Produk
+## 0. Executive Summary
 
-## 1.1 Nama Produk
+AegisTrade AI is a Band-powered multi-agent export compliance tribunal for high-stakes global trade workflows. The product helps manufacturers, logistics teams, and compliance officers evaluate export orders before goods are released from warehouse control.
 
-**AegisTrade AI — Multi-Agent Global Trade Compliance & EAR Enforcement Tribunal**
+Unlike a single AI assistant that gives one-shot legal answers, AegisTrade AI creates a structured digital tribunal room where specialized agents exchange evidence, challenge each other, escalate ambiguity, and produce a defensible recommendation: **GO**, **HOLD**, or **NO-GO**.
 
-AegisTrade AI adalah sistem otomasi kepatuhan hukum perdagangan internasional (*global trade compliance*) berbasis AI Multi-Agent yang dirancang untuk menyaring, membedah, dan mengaudit manifes ekspor secara otonom terhadap regulasi ketat **EAR (Export Administration Regulations)** dan sanksi ekonomi **OFAC (Office of Foreign Assets Control)**. 
+The system is designed for situations where wrong decisions can create serious consequences: illegal exports, sanctions exposure, shipment delays, executive liability, reputational damage, and loss of export privileges.
 
-Sistem ini beroperasi dengan mengintegrasikan sistem ERP internal perusahaan dengan platform kolaborasi **Band SDK (`band.ai`)**. Ketika pesanan ekspor baru diajukan, sistem secara otomatis memicu ruang sidang digital (*Tribunal Room*) terisolasi yang diisi oleh minimal 3 Agen AI dengan peran spesifik yang saling bertolak belakang. Agen-agen ini berdebat menggunakan inferensi model khusus (*specialized open-source models*) dari **Featherless AI** dan **AI/ML API** untuk menghasilkan keputusan akhir yang mutlak (GO, HOLD, atau NO-GO), mencegah pelanggaran hukum perdagangan sebelum kontainer logistik meninggalkan gudang fisik.
+AegisTrade AI does **not** replace licensed legal judgment. It performs rapid first-pass triage, organizes evidence, detects contradictions, identifies possible diversion risk, and creates a tamper-evident audit trail for human compliance officers.
 
----
-
-## 1.2 Latar Belakang
-
-Dalam ekosistem perdagangan global, perusahaan manufaktur teknologi tingkat tinggi menghadapi ancaman hukum luar biasa. Komponen komersial umum seperti sensor thermal, mikrokontroler, dan osiloskop sering kali diklasifikasikan sebagai **Dual-Use Technology**—barang sipil yang dapat dimodifikasi menjadi pemandu rudal atau persenjataan militer. Pelanggaran terhadap aturan EAR dan transaksi dengan entitas yang disanksi oleh OFAC dapat menjatuhkan hukuman penjara hingga 20 tahun bagi jajaran eksekutif, denda puluhan juta dolar, serta pemutusan total dari jaringan perbankan internasional (SWIFT).
-
-Metode audit kepatuhan manual saat ini memakan waktu 3-7 hari kerja dan rentan terhadap manipulasi dokumen atau kesalahan manusia (*human error*). Di sisi lain, penggunaan AI tunggal generik sering kali menghasilkan halusinasi hukum dan tidak memiliki akuntabilitas. AegisTrade AI memecahkan dilema ini dengan memanfaatkan ekosistem *Multi-Agent* otonom yang saling mengoreksi secara transparan dan mencatat seluruh alur berpikirnya ke dalam lembar audit (*audit trail*) yang tidak dapat dimanipulasi.
+The core innovation is the **Evidence Packet Protocol**: every agent claim must be submitted as a structured object with source, extracted fact, risk level, confidence score, and challenge status. This makes Band the live coordination layer for shared context, dispute resolution, role specialization, and decision handoff.
 
 ---
 
-## 1.3 Tujuan Utama
+## 1. Product Positioning
 
-Tujuan utama AegisTrade AI adalah:
+### 1.1 Product Name
 
-1. Mempercepat proses audit kepatuhan ekspor dari hitungan hari menjadi di bawah 30 detik.
-2. Mengidentifikasi barang berkategori *Dual-Use Technology* berdasarkan parameter teknis mentah secara akurat.
-3. Mendeteksi skema pengalihan rute (*transshipment*) dan jaringan perusahaan cangkang (*shell companies*) di negara transit.
-4. Menghilangkan ketergantungan pada penilaian satu arah AI dengan menerapkan mekanisme perdebatan multi-agen.
-5. Menyediakan log audit forensik berbasis room-hash Band.ai yang siap diuji oleh regulator eksternal.
-6. Mengintegrasikan keputusan hukum AI langsung dengan sistem penguncian fisik logistik gudang (*automated warehouse locking*).
-7. Meminimalkan risiko sanksi sekunder (*secondary sanctions*) yang dapat membekukan keuangan korporasi.
-8. Menyediakan mekanisme *Human-in-the-Loop* (HITL) yang aman untuk peninjauan tingkat lanjut.
+**AegisTrade AI**
 
----
+### 1.2 Full Product Title
 
-# 2. Masalah yang Ingin Diselesaikan
+**AegisTrade AI — Adversarial Multi-Agent Compliance Tribunal for Global Export Risk**
 
-## 2.1 Masalah Operasional
+### 1.3 Short Description
 
-1. Pemeriksaan dokumen manifes ekspor yang tebal dan rumit sangat lambat dan memakan biaya operasional tinggi.
-2. Tim penjualan (*Sales*) sering menyembunyikan detail parameter teknis barang demi mengejar target transaksi.
-3. Penentuan kode klasifikasi ekspor (ECCN) sering keliru akibat dokumen teknis pabrik yang sangat kompleks.
-4. Sulit memantau perubahan daftar entitas sanksi global (SDN List) yang diperbarui secara acak oleh otoritas internasional.
-5. Koordinasi antara tim Sales di lapangan, tim Legal di kantor pusat, dan tim Logistik di gudang sangat terfragmentasi.
-6. Pengambilan keputusan ekspor darurat atau bernilai tinggi sering dilakukan tanpa dasar analisis risiko hukum yang matang.
+AegisTrade AI is a multi-agent export compliance gateway that uses Band rooms to let specialized AI agents investigate, challenge, and explain high-risk shipment decisions before goods are released.
 
-## 2.2 Masalah Keamanan & Hukum
+### 1.4 One-Sentence Pitch
 
-1. Risiko tinggi lolosnya barang ke tangan militer asing akibat taktik penyamaran deskripsi barang (*misclassification*).
-2. Taktik pembeli palsu (*straw buyer*) yang memanfaatkan negara ketiga yang netral sebagai titik transit penyelundupan.
-3. Ketiadaan rekam jejak (*audit trail*) yang sah dan tersusun rapi jika suatu saat perusahaan dituduh melanggar EAR oleh pemerintah.
-4. AI biasa sering mengalami halusinasi hukum, mensitasi regulasi yang tidak eksis, atau mengabaikan pembaruan aturan terbaru.
-5. Risiko bypass internal di mana staf logistik tetap merilis barang dari gudang meskipun status legalitasnya masih dipertanyakan.
-6. Kebocoran cetak biru (*blueprint*) teknologi sensitif ke pihak asing melalui transfer pengetahuan digital (*deemed export*).
+AegisTrade AI turns export compliance from a slow manual checklist into a structured multi-agent tribunal where technical, sanctions, evasion, and legal agents debate evidence before issuing a defensible shipment recommendation.
+
+### 1.5 Hackathon Fit
+
+AegisTrade AI is designed specifically for the **Regulated & High-Stakes Workflows** track. It demonstrates:
+
+- At least 3 specialized agents collaborating through Band.
+- Band as the core shared room for agent-to-agent communication.
+- Structured context exchange, not just chat messages.
+- Cross-agent review and challenge.
+- Human-in-the-loop escalation.
+- Enterprise value in compliance, logistics, and risk management.
+- Clear originality beyond a simple chatbot or linear automation.
 
 ---
 
-# 3. Visi Produk
+## 2. Problem Statement
 
-AegisTrade AI menjadi platform manajemen kepatuhan ekspor yang:
+### 2.1 Core Problem
 
-1. **Autonomous Compliance Tribunal**
-   Menyelesaikan penilaian risiko hukum melalui mekanisme sidang dan debat otonom antar agen AI terspesialisasi.
+Global manufacturers and logistics providers must screen export orders for technical export controls, sanctions risk, buyer risk, destination risk, and end-use risk. This process is often manual, slow, fragmented, and hard to audit.
 
-2. **Strict Regulation Enforcer**
-   Menjamin kepatuhan penuh terhadap standar EAR, OFAC, dan sanksi internasional tanpa kompromi komersial.
+A single shipment can involve:
 
-3. **Immutable Audit Integrity**
-   Setiap pertukaran argumen agen di dalam platform Band tercatat secara permanen sebagai bukti ikhtiar kepatuhan perusahaan (*due diligence*).
+- Product specifications.
+- Export control classification candidates.
+- Buyer identity.
+- Ultimate beneficial ownership.
+- End-user declarations.
+- Intermediary logistics routes.
+- Transit countries.
+- Sanctions and restricted party screening.
+- Internal approvals.
+- Human override decisions.
 
-4. **Logistically Connected**
-   Keputusan hukum digital terhubung langsung dengan aksi pengamanan fisik barang di level infrastruktur rantai pasok.
+When these checks happen across emails, spreadsheets, legal memos, and ERP notes, it becomes difficult to prove what the company knew, what it reviewed, and why it made a decision.
 
-5. **Cross-Framework Collaborative**
-   Menggunakan keunggulan Band SDK untuk menjembatani agen-agen AI yang dibangun di atas framework dan model LLM yang berbeda secara seamless.
+### 2.2 Current Pain Points
 
----
+1. **Slow manual review**  
+   Compliance review can take days because technical, legal, sales, and logistics teams must coordinate manually.
 
-# 4. Ruang Lingkup Sistem
+2. **Fragmented evidence**  
+   Important facts are scattered across PDFs, ERP records, emails, and third-party screening systems.
 
-## 4.1 Termasuk dalam Sistem
+3. **One-directional automation**  
+   Many compliance tools only perform database lookup or rule matching. They do not actively debate ambiguity or challenge weak evidence.
 
-AegisTrade AI mencakup:
+4. **Weak auditability**  
+   Even if the company performs due diligence, the rationale may not be stored in a regulator-ready format.
 
-1. Autentikasi pengguna multi-role terintegrasi sistem korporat.
-2. Manajemen pendaftaran Remote Agent melalui dashboard Band (`Connect Remote Agent`).
-3. Dashboard visual kepatuhan real-time untuk masing-masing role.
-4. Ingestion otomatis data pesanan ekspor baru dari sistem ERP eksternal.
-5. Ekstraksi teks otomatis dari file PDF manifes teknis komponen.
-6. Otomatisasi pemicuan (*triggering*) pembuatan Room Tribunal baru di Band SDK.
-7. Modul debat otonom otonom minimal 3 agen (Deconstructor, Bloodhound, Arbitrator).
-8. Mesin pencari kecocokan ECCN (*Export Control Classification Number*) berbasis parameter teknis.
-9. Pelacakan entitas pembeli terhadap database sanksi SDN OFAC via API.
-10. Deteksi pola kepemilikan korporasi cangkang (*shell company pattern detection*).
-11. Mekanisme pengambilan keputusan akhir terstruktur (GO, HOLD, NO-GO).
-12. Integrasi webhook ke sistem kontrol gerbang/kunci fisik logistik gudang.
-13. Alur peninjauan manual dokumen tambahan (*End-User Certificate*) oleh Compliance Officer.
-14. Sistem log audit berantai berbasis hash room komunikasi Band.ai.
-15. Manajemen pembatasan akses data teknis sensitif berdasarkan asas *Need-to-Know*.
-16. Ekspor berkas laporan kepatuhan terenkripsi untuk kebutuhan inspeksi regulator pemerintah.
+5. **Risk of misclassification**  
+   Technical product descriptions may be vague or intentionally simplified, causing export classification risk.
 
----
+6. **Risk of diversion**  
+   A buyer may appear clean, but the transaction may still carry risk due to routing, ownership, vague end-use, or suspicious commercial patterns.
 
-## 4.2 Tidak Termasuk dalam Sistem
-
-AegisTrade AI tidak mencakup:
-
-1. Sistem pembayaran bea cukai atau kalkulasi tarif pajak ekspor.
-2. Pembuatan dokumen pengapalan fisik (*Bill of Lading*) komersial.
-3. Pelacakan posisi kontainer logistik secara real-time via GPS di laut bebas.
-4. Pengurusan izin lisensi ekspor resmi langsung ke sistem web BIS/pemerintah AS.
-5. Manajemen penggajian (*payroll*) staf sales atau logistik perusahaan.
-6. Otomasi penolakan sepihak tanpa pencatatan alasan log audit.
-7. Analisis struktur kimia material mentah menggunakan lab fisik.
-8. Pengaturan rute transportasi kapal kargo (*freight forwarding optimization*).
-9. Enkripsi database ERP utama milik klien secara keseluruhan.
+7. **Human overload**  
+   Compliance officers need clear evidence summaries, not raw unstructured logs.
 
 ---
 
-# 5. Stakeholder
+## 3. Product Vision
 
-| Stakeholder        | Kepentingan                                                       |
-| ------------------ | ----------------------------------------------------------------- |
-| Compliance Officer | Memastikan operasional ekspor 100% aman dari jerat sanksi EAR/OFAC |
-| Export Sales Team  | Memasukkan data transaksi cepat dan mengetahui status kelayakan order |
-| Gudang & Logistik  | Menerima instruksi rilis barang yang valid dan aman dari hukum    |
-| Direksi / Board    | Memitigasi risiko penutupan perusahaan dan tuntutan pidana pribadi|
-| Sistem Band.ai     | Menyediakan infrastruktur room komunikasi dan interaksi antar agen|
-| Juri Hackathon     | Menilai inovasi arsitektur multi-agent, fungsionalitas Band SDK, dan nilai bisnis nyata |
+AegisTrade AI aims to become an **AI-assisted compliance decision infrastructure** for global trade teams.
 
----
+The vision is not to let AI make final legal decisions. The vision is to make every high-risk trade decision:
 
-# 6. Role Pengguna & Agen
+- Faster to triage.
+- Easier to explain.
+- Harder to manipulate.
+- Safer to escalate.
+- More defensible during internal or regulatory review.
 
-## 6.1 Role Pengguna (Manusia)
-
-### 1. Compliance Officer (Admin)
-Mempunyai hak akses penuh untuk mengelola konfigurasi sistem, menguji log room Band, memberikan override status HOLD jika dokumen *End-User Certificate* telah valid, dan mengekstrak laporan audit resmi.
-
-### 2. Export Sales Staff
-Bertugas menginput order ekspor baru, mengunggah manifes teknis, memantau status persetujuan, dan melampirkan berkas sanggahan/lisensi jika pesanan terkena penangguhan.
-
-### 3. Logistics Staff
-Bertugas di area gudang fisik, memantau antrean rilis barang yang berstatus GO, dan menerima notifikasi peringatan jika ada sistem penguncian otomatis yang aktif akibat status HOLD/NO-GO.
-
-## 6.2 Role Agen AI (Terintegrasi Band SDK)
-
-### 1. Manifest Tech-Deconstructor (`@hilmimubarok2006/agent-deconstructor`)
-Bertugas membedah data teknis barang, melakukan ekstraksi parameter dari PDF manufaktur, dan mendeteksi apakah barang memenuhi kriteria *Dual-Use Technology* berdasarkan threshold teknis internasional.
-
-### 2. Geopolitical Sanctions Bloodhound
-Bertugas menganalisis profil pembeli, menyisir database SDN OFAC, mendeteksi risiko negara transit, dan mencari indikasi struktur *shell company* dari entitas pemesan.
-
-### 3. Logistics Legal-Arbitrator (The Judge)
-Bertugas memimpin ruang komunikasi di Band, menimbang argumen dari Deconstructor dan Bloodhound, menghitung matriks risiko gabungan, menetapkan status akhir (GO/HOLD/NO-GO), serta menembakkan webhook ke sistem logistik gudang.
+AegisTrade AI should feel like a digital compliance war room where every agent has a job, every claim requires evidence, every disagreement is tracked, and every decision leaves a trace.
 
 ---
 
-# 7. Matriks Hak Akses
+## 4. Product Principles
 
-| Fitur                     | Compliance Officer | Sales Staff | Logistik Staff | Agent Arbitrator |
-| ------------------------- | -----------------: | ----------: | -------------: | ---------------: |
-| Login & Session           |                 Ya |          Ya |             Ya |            Tidak |
-| Registrasi Remote Agent   |                 Ya |       Tidak |          Tidak |            Tidak |
-| Input Ekspor Manifes      |              Tidak |          Ya |          Tidak |            Tidak |
-| Trigger Room Band.ai      |           Otomatis |    Otomatis |          Tidak |            Tidak |
-| Interaksi Debat di Band   |           Terbatas |       Tidak |          Tidak |               Ya |
-| Override Status HOLD      |                 Ya |       Tidak |          Standard |            Tidak |
-| Monitoring Kunci Gudang   |                 Ya |       Tidak |             Ya |            Tidak |
-| Tembak Webhook Logistik   |              Tidak |       Tidak |          Tidak |               Ya |
-| Ekstrak Laporan Audit     |                 Ya |       Tidak |          Tidak |            Tidak |
-| Edit Master Sanksi/ECCN   |                 Ya |       Tidak |          Tidak |            Tidak |
+### 4.1 Evidence Over Opinion
+
+Agents are not allowed to simply say “this looks risky.” They must submit structured evidence packets.
+
+### 4.2 Adversarial by Design
+
+The system is intentionally built with agents that disagree. This prevents one model from dominating the decision.
+
+### 4.3 Human Authority Preserved
+
+The AI recommends. Humans approve, reject, or request additional documentation in ambiguous cases.
+
+### 4.4 Fail-Safe, Not Fail-Open
+
+When uncertainty remains, the system defaults to **HOLD**, not **GO**.
+
+### 4.5 Traceability First
+
+Every claim, challenge, decision, override, and document update must be logged.
+
+### 4.6 Practical Hackathon Scope
+
+The MVP simulates enterprise integrations where necessary. It should be impressive, explainable, and buildable within hackathon constraints.
 
 ---
 
-# 8. Arsitektur Sistem
+## 5. Target Users
 
-## 8.1 Model Arsitektur
+### 5.1 Primary Users
 
-AegisTrade AI menggunakan arsitektur **Hybrid Multi-Agent Connected Hub** melalui Band SDK dengan backend utama berbasis FastAPI dan database MySQL pada lingkungan Laragon.
+#### Compliance Officer
+
+Responsible for reviewing export risk, approving or rejecting escalated shipments, and producing audit reports.
+
+Needs:
+
+- Clear risk summary.
+- Agent evidence trail.
+- Explainable decision matrix.
+- Human override workflow.
+- Exportable audit report.
+
+#### Export Sales Manager
+
+Responsible for entering order details and responding to documentation requests.
+
+Needs:
+
+- Fast status feedback.
+- Clear reason for HOLD.
+- List of missing documents.
+- Simple upload flow.
+
+#### Logistics Operator
+
+Responsible for releasing or holding shipments.
+
+Needs:
+
+- Clear release status.
+- Warehouse lock/release simulation.
+- Shipment-level decision state.
+
+### 5.2 Secondary Users
+
+#### Executive / Legal Reviewer
+
+Needs high-level risk visibility, defensible rationale, and escalation history.
+
+#### Internal Auditor
+
+Needs immutable or tamper-evident logs of decision-making and human overrides.
+
+#### Product / Trade Classification Specialist
+
+Needs technical extraction output and classification candidates.
+
+---
+
+## 6. Product Scope
+
+### 6.1 In Scope for MVP
+
+The hackathon MVP includes:
+
+1. Export order ingestion.
+2. PDF or structured manifest upload.
+3. Buyer and route input.
+4. Band room creation per order.
+5. Four specialized agents collaborating through Band.
+6. Evidence Packet Protocol.
+7. Cross-examination loop.
+8. GO / HOLD / NO-GO recommendation.
+9. HOLD cure pack generation.
+10. Human-in-the-loop review.
+11. Dashboard decision matrix.
+12. Warehouse release lock simulation.
+13. Tamper-evident audit log.
+14. Exportable markdown or PDF-ready compliance report.
+15. Demo scenario with at least one high-risk shipment.
+
+### 6.2 Out of Scope for MVP
+
+The MVP does not include:
+
+1. Full legal-grade ECCN determination.
+2. Real legal advice.
+3. Physical warehouse hardware integration.
+4. Complete global sanctions database synchronization.
+5. Real-time production ERP deployment.
+6. Licensed attorney sign-off.
+7. Full cryptographic notarization on a public blockchain.
+8. Complete support for every export regulation worldwide.
+9. Automatic filing of export licenses.
+10. Autonomous final release of real-world shipments.
+
+### 6.3 Post-MVP Scope
+
+Future versions may include:
+
+- Real ERP connectors.
+- Live restricted-party screening APIs.
+- Document authenticity checks.
+- Continuous sanctions drift monitoring.
+- Licensing workflow integration.
+- Enterprise SSO.
+- Advanced audit export.
+- Policy versioning.
+- Case reopening when regulations change.
+
+---
+
+## 7. Differentiation Strategy
+
+Most hackathon projects risk becoming ordinary chatbot workflows. AegisTrade AI must win by showing **multi-agent collaboration that cannot be replaced by one prompt**.
+
+### 7.1 Differentiator 1 — Evidence Packet Protocol
+
+Every agent must output structured claims:
+
+```json
+{
+  "packet_id": "EP-TECH-001",
+  "agent": "Manifest Tech-Deconstructor",
+  "claim": "The product may have dual-use export-control relevance.",
+  "evidence_type": "technical_parameter",
+  "source": "manifest_page_2",
+  "extracted_fact": "Detection range: 5 km",
+  "risk_level": "HIGH",
+  "confidence": 0.82,
+  "challenge_status": "OPEN",
+  "requires_human_review": true
+}
+```
+
+This makes the system more than a chat room. The Band room becomes a structured evidence exchange.
+
+### 7.2 Differentiator 2 — Adversarial Evasion Analyst
+
+The system includes a red-team style agent whose job is defensive: to detect possible evasion patterns, not to help evade rules.
+
+It searches for:
+
+- Vague product descriptions.
+- Mismatch between technical specs and declared category.
+- Suspicious transit route.
+- Buyer with no shipment history.
+- End-use description that is too generic.
+- Ownership or control ambiguity.
+- Repeated small orders that may represent order splitting.
+
+### 7.3 Differentiator 3 — Cross-Examination Loop
+
+Agents must challenge each other before the judge agent decides.
+
+Example:
+
+- Technical agent flags dual-use concern.
+- Sanctions agent says buyer is not directly listed.
+- Evasion agent flags route anomaly.
+- Judge agent asks technical agent whether the evidence is classification-grade or only suspicion-grade.
+- Judge agent asks sanctions agent whether indirect ownership creates escalation risk.
+- Final decision includes accepted, disputed, and unresolved claims.
+
+### 7.4 Differentiator 4 — Cure Pack Builder
+
+When a case enters HOLD, AegisTrade AI generates a **Cure Pack**: a list of documents required to resolve ambiguity.
+
+Possible cure documents:
+
+- End-User Certificate.
+- Ultimate Beneficial Ownership declaration.
+- Non-reexport letter.
+- Destination-use statement.
+- Route justification.
+- Product application declaration.
+- Compliance officer attestation.
+- Government or ministry end-use confirmation when applicable.
+
+### 7.5 Differentiator 5 — Tamper-Evident Audit Trail
+
+AegisTrade AI does not claim fully immutable storage in the MVP. Instead, it implements a tamper-evident audit chain.
+
+Each event stores:
+
+- Current event hash.
+- Previous event hash.
+- Timestamp.
+- Actor or agent ID.
+- Event payload.
+- Decision state.
+
+If an old log is modified, the hash chain breaks.
+
+### 7.6 Differentiator 6 — Decision Defensibility Score
+
+Instead of only showing risk, the system shows how defensible the decision is.
+
+Example:
+
+| Factor | Status |
+|---|---|
+| Technical evidence complete | Partial |
+| Sanctions screening complete | Complete |
+| Ownership verified | Incomplete |
+| End-use verified | Missing |
+| Route justified | Weak |
+| Agent disagreement resolved | No |
+| Final defensibility | Low |
+
+A low defensibility score does not always mean illegal. It means the company cannot safely justify a GO decision yet.
+
+---
+
+## 8. Regulatory Context and Safety Boundaries
+
+### 8.1 EAR Context
+
+The Export Administration Regulations (EAR) govern the export of many commercial and dual-use items. Some items may have civilian use but also possible military or strategic use.
+
+AegisTrade AI only proposes **classification candidates** and **risk indicators**. It does not claim final ECCN classification.
+
+### 8.2 OFAC / Sanctions Context
+
+Restricted-party screening is a critical part of global trade compliance. AegisTrade AI screens direct and indirect risk indicators but does not claim to be the final legal source of truth.
+
+### 8.3 Ownership Rule Caution
+
+The MVP must avoid saying that a minority ownership percentage automatically means a blocked party. For example, 45% ownership by a risky entity may create escalation risk, but it should not be described as automatically blocked unless the relevant legal standard is met.
+
+Correct product language:
+
+> “Not automatically blocked based on the available ownership threshold, but escalated to HOLD due to significant control, affiliation, or diversion concern.”
+
+### 8.4 Legal Disclaimer
+
+AegisTrade AI is a decision-support and auditability system. It does not provide legal advice and does not replace licensed export counsel, compliance officers, or authorized government determinations.
+
+---
+
+## 9. System Overview
+
+### 9.1 High-Level Architecture
 
 ```mermaid
 flowchart TD
-    A[Sistem ERP / UI Sales Staff] -->|FastAPI Ingestion Endpoint| S[AegisTrade Core Service]
-    S -->|Buat Room & Daftarkan Konteks| B[Band.ai Collaboration Layer]
-    
-    subgraph Band Rooms
-        B <--> AG1[Agent 1: Tech-Deconstructor]
-        B <--> AG2[Agent 2: Sanctions Bloodhound]
-        B <--> AG3[Agent 3: Legal-Arbitrator]
-    end
-
-    AG1 -->|Inferensi Model Spesifik| F1[Featherless AI / Llama-3]
-    AG2 -->|Saring Database SDN| M1[AI/ML API / Mixtral]
-    AG3 -->|Evaluasi Akhir & Veto| F1
-
-    AG3 -->|Status Decision Engine| S
-    S -->|Simpan Transaksi & Log Debat| K[SQLAlchemy ORM]
-    K --> L[(MySQL laragon_aegistrade_db)]
-    
-    S -->|Webhook Trigger| W[Hardware Gudang: Automated Gateway Lock]
-
+    U[Sales / Compliance User] --> FE[React Dashboard]
+    FE --> API[FastAPI Backend]
+    API --> DB[(MySQL / Laragon)]
+    API --> Band[Band Room per Export Order]
+    Band --> A1[Agent 1: Manifest Tech-Deconstructor]
+    Band --> A2[Agent 2: Restricted Party Bloodhound]
+    Band --> A3[Agent 3: Adversarial Evasion Analyst]
+    Band --> A4[Agent 4: Legal-Arbitrator Judge]
+    A1 --> M1[Featherless AI / Open-Source Model]
+    A2 --> M2[AI/ML API / Reasoning + Screening]
+    A3 --> M3[AI/ML API or Featherless AI]
+    A4 --> M4[Reasoning Model]
+    API --> WMS[Warehouse Release Lock Simulation]
+    API --> REP[Audit Report Generator]
 ```
 
-## 8.2 Komponen Utama
+### 9.2 Core Components
 
-| Komponen | Fungsi |
-| --- | --- |
-| React Vite Dashboard | Antarmuka manajemen kepatuhan, input sales, dan rilis logistik |
-| Tailwind CSS & Shadcn | Framework desain antarmuka responsif tingkat korporat |
-| Python FastAPI | Backend inti penanganan sirkulasi data, webhook, dan manajemen state |
-| Band SDK / API | Lapisan orkestrasi, tempat agen AI saling bertukar konteks terstruktur |
-| Codeband Tooling | Referensi workflow otomasi penulisan skrip evaluasi aturan kepatuhan |
-| Featherless AI | Penyedia serverless inference untuk open-source model tingkat tinggi |
-| AI/ML API | Failback network penanganan pemrosesan ekstraksi dokumen regulasi |
-| SQLAlchemy ORM | Pemetaan objek database relasional ke backend Python |
-| MySQL (Laragon) | Penyimpanan data transaksional, log debat, master sanksi, dan data ECCN |
+| Component | Description |
+|---|---|
+| React Dashboard | User-facing interface for order ingestion, status, evidence graph, and human review. |
+| FastAPI Backend | Core orchestration API, database service, Band room creation, and report generation. |
+| Band SDK | Collaboration layer where agents exchange structured evidence and challenges. |
+| Remote Agents | Specialized AI agents with distinct roles and models. |
+| MySQL / Laragon | MVP database for orders, users, rooms, messages, evidence packets, and audit logs. |
+| Warehouse Lock Simulator | Simulates shipment hold/release state. |
+| Audit Report Generator | Produces compliance decision reports. |
 
 ---
 
-# 9. Prinsip Keamanan
+## 10. Agent Design
 
-## 9.1 Data Minimization & Leakage Prevention
+### 10.1 Agent 1 — Manifest Tech-Deconstructor
 
-Sistem menerapkan pembatasan ketat terhadap sirkulasi spesifikasi desain militer mentah. Dokumen dibedah di memori lokal, hanya parameter numerik penting dan kode ECCN yang dikirim ke jaringan luar untuk menghindari ancaman pelanggaran *Deemed Export*.
+**Role:** Technical product auditor  
+**Primary Objective:** Extract technical parameters and identify possible export-control classification candidates.  
+**Personality:** Skeptical, detail-oriented, technical.  
+**Model Suggestion:** Llama-3 or similar open-source model through Featherless AI.
 
-## 9.2 Tokenized Agent Authentication
+Responsibilities:
 
-Setiap Remote Agent yang terhubung melalui platform Band wajib menggunakan enkripsi API key unik. Sesuai dengan modul `Connect Remote Agent`, akses registri personal diamankan ketat untuk mencegah injeksi agen asing tidak sah ke dalam tribunal room perusahaan.
+- Parse product manifest.
+- Extract product category, model, technical parameters, and declared use.
+- Identify suspicious mismatch between description and specifications.
+- Propose ECCN candidate categories.
+- Submit technical evidence packets.
+- Respond to challenges from other agents.
 
-## 9.3 Multi-Model Redundancy Guardrails
+Outputs:
 
-Untuk menghindari fenomena halusinasi satu model LLM tunggal, sistem mewajibkan Agent 1 dan Agent 2 menggunakan basis model dari provider yang berbeda (misalnya Llama-3 melalui Featherless AI dan Mixtral via AI/ML API). Keputusan hukum tidak valid jika tidak tercapai kuorum argumen terstruktur.
+- Technical risk score.
+- Extracted parameters.
+- ECCN candidate list.
+- Ambiguity flags.
+- Evidence packets.
 
-## 9.4 Automated Warehouse Isolation (Air-Gapping Engine)
+Example:
 
-Status transaksi bersifat *Default-Lockout*. Sebelum keputusan bertanda **GO** diterbitkan secara sah dan tervalidasi oleh tanda tangan kriptografi Agent 3, API gudang akan mengunci status pengapalan barang di sistem fisik logistik.
-
-## 9.5 Immutable Band Room Hash Chain
-
-Semua pesan, interaksi, dan sanggahan antar agen dalam room Band.ai diproses menjadi satu rangkaian string hash berantai:
-
-$$ExportOrderHash = SHA256(OrderID + MessageChainContent + PreviousRoomHash)$$
-
-Jika ada entitas internal yang mencoba mengubah baris database log debat di Laragon MySQL, sistem akan mendeteksi ketidakcocokan dengan data state asli pada platform Band.ai.
-
----
-
-# 10. Authentication & Session Design
-
-## 10.1 Login Flow & Agent Security
-
-1. Pengguna internal memasukkan kredensial korporat (Username/Password).
-2. Backend FastAPI memvalidasi password menggunakan skema hashing `passlib[bcrypt]`.
-3. Sesi JWT token berdurasi pendek diterbitkan untuk browser pengguna.
-4. Di sisi lain, Remote Agent (`@hilmimubarok2006/agent`) terautentikasi ke dashboard Band menggunakan token API key dari lablab.ai untuk membuka jembatan komunikasi ganda (*Two-Way Communication Hub*).
-
-## 10.2 Session Timeout & Lockout Policy
-
-* Sesi UI browser otomatis hangus jika tidak ada aktivitas selama 30 menit.
-* Jika terjadi percobaan akses endpoint ekspor ilegal dari IP tidak dikenal, sistem secara otomatis menonaktifkan API Key Sales terkait dan mengirimkan alarm darurat ke dashboard Compliance Officer.
-
----
-
-# 11. User Flow Umum
-
-## 11.1 Flow Pendaftaran Remote Agent & Inisiasi Sistem
-
-```mermaid
-flowchart TD
-    A[Compliance Officer buka Band.ai] --> B[Pilih Connect Remote Agent]
-    B --> C[Input Agent Name & Handle @hilmimubarok2006/agent]
-    C --> D[Aktifkan Personal Registry Access & Public Directory]
-    D --> E[Simpan & Dapatkan Jembatan Handle Koneksi]
-    E --> F[FastAPI Sinkronisasi Agen Status Aktif]
-
-```
-
-## 11.2 Flow Ingestion Order Baru & Pemicuan Tribunal Room
-
-```mermaid
-flowchart TD
-    A[Sales Input Data Order Baru di ERP] --> B[Upload PDF Manifes Spesifikasi Barang]
-    B --> C[FastAPI Generate Order ID & Set Status PENDING_LOCK]
-    C --> D[Tembak Webhook ke Band SDK untuk Buat Room Baru]
-    D --> E[Band Room Terbuka: 'Tribunal-Order-XXXX']
-    E --> F[Undang 3 Remote Agent ke Dalam Room]
-
-```
-
-## 11.3 Flow Analisis Teknis & Klasifikasi ECCN (Agent 1)
-
-```mermaid
-flowchart TD
-    A[Agent 1 masuk Band Room] --> B[Unduh Konteks Manifes Teknis Dokumen]
-    B --> C[Panggil Featherless AI Ekstrak Parameter]
-    C --> D[Cocokkan dengan Regulasi ECCN EAR]
-    D --> E{Apakah Dual-Use Goods?}
-    E -- Ya --> F[Kirim Argumen: 'RISK_HIGH: Komponen Berpotensi Militer' ke Band]
-    E -- Tidak --> G[Kirim Argumen: 'RISK_LOW: Komersial Murni' ke Band]
-
-```
-
-## 11.4 Flow Investigasi Sanksi & Shell Company (Agent 2)
-
-```mermaid
-flowchart TD
-    A[Agent 2 pantau Room Band] --> B[Ambil Data Identitas Pembeli & Negara Transit]
-    B --> C[Scanning SDN List OFAC via AI/ML API Network]
-    C --> D{Entitas Terindikasi Sanksi / Cangkang?}
-    D -- Ya --> E[Kirim Veto: 'SANCTION_MATCH: Blokir Rute Transit Oman' ke Band]
-    D -- Tidak --> G[Kirim Argumen: 'CLEAN: Profil Pembeli Valid' ke Band]
-
-```
-
-## 11.5 Flow Sidang Arbitrase & Pengambilan Keputusan (Agent 3)
-
-```mermaid
-flowchart TD
-    A[Agent 3 evaluasi argumen Agent 1 & 2 di Band] --> B[Hitung Matriks Keputusan Akhir]
-    B --> C{Apakah ada bendera merah / konflik?}
-    C -- Ada Risiko Mutlak --> D[Tetapkan status NO-GO]
-    C -- Ada Peringatan Ambigu --> E[Tetapkan status HOLD + Minta End-User Cert]
-    C -- Semua Bersih --> F[Tetapkan status GO]
-    D & E & F --> G[Kirim Hasil Evaluasi Akhir ke Core FastAPI]
-
-```
-
-## 11.6 Flow Verifikasi Tambahan Dokumen (Human-in-the-Loop)
-
-```mermaid
-flowchart TD
-    A[Status Order = HOLD] --> B[Sales unggah Berkas Sanggahan / End-User Certificate]
-    B --> C[Notifikasi Masuk ke Dashboard Compliance Officer]
-    C --> D[Compliance Officer Review Manual Kelayakan]
-    D --> E{Apakah Dokumen Sah?}
-    E -- Ya --> F[Input override code -> Ubah Status ke GO]
-    E -- Tidak --> G[Ubah Status Permanen ke NO-GO]
-
-```
-
-## 11.7 Flow Pemicuan Kunci Logistik Otomatis (Warehouse Locking)
-
-```mermaid
-flowchart TD
-    A[FastAPI Terima Status Akhir Transaksi] --> B{Apakah Status == GO?}
-    B -- Tidak --> C[Kirim Webhook Lock ke Gudang -> Kontainer Terkunci]
-    B -- Ya --> D[Kirim Webhook Release -> Cetak Dokumen Bea Cukai & Pintu Terbuka]
-
-```
-
-## 11.8 Flow Ekstraksi Audit Trail untuk Pemeriksaan Otoritas
-
-```mermaid
-flowchart TD
-    A[Auditor Pemerintah Datang] --> B[Compliance Officer Akses Menu Export Laporan]
-    B --> C[Sistem Tarik Riwayat Chat Debat Agen dari MySQL & Hash Band]
-    C --> D[Kompilasi Berkas Menjadi PDF Laporan Resmi Terenkripsi]
-    D --> E[Serahkan Bukti Due Diligence Perusahaan]
-
+```json
+{
+  "packet_id": "EP-TECH-004",
+  "agent": "Manifest Tech-Deconstructor",
+  "claim": "Declared product category appears underspecified relative to technical range.",
+  "evidence_type": "manifest_mismatch",
+  "source": "uploaded_manifest.pdf:p3",
+  "extracted_fact": "Declared as industrial sensor, but range and sensitivity exceed typical low-risk catalog pattern.",
+  "risk_level": "MEDIUM",
+  "confidence": 0.76,
+  "challenge_status": "OPEN"
+}
 ```
 
 ---
 
-# 12. Use Case Diagram
+### 10.2 Agent 2 — Restricted Party & Ownership Bloodhound
 
-```mermaid
-flowchart LR
-    Compliance((Compliance Officer))
-    Sales((Sales Staff))
-    Logistik((Logistics Staff))
-    Agent1((Agent Deconstructor))
-    Agent2((Agent Sanctions Bloodhound))
-    Agent3((Agent Arbitrator))
+**Role:** Sanctions, restricted party, and ownership investigator  
+**Primary Objective:** Screen buyer, consignee, end-user, intermediaries, aliases, and ownership risk.  
+**Personality:** Suspicious, investigative, entity-focused.  
+**Model Suggestion:** Mixtral or other reasoning model through AI/ML API.
 
-    UC01[Daftarkan Remote Agent]
-    UC02[Input Order Ekspor]
-    UC03[Ekstrak Parameter Teknis]
-    UC04[Skrining Daftar Hitam OFAC]
-    UC05[Arbitrase Debat di Band Room]
-    UC06[Override Status HOLD]
-    UC07[Monitoring Kunci Gudang]
-    UC08[Cetak Laporan Audit Trail]
-    UC09[Tulis Log Transaksi Database]
+Responsibilities:
 
-    Compliance --> UC01
-    Compliance --> UC06
-    Compliance --> UC08
+- Check buyer name against mock or live restricted-party datasets.
+- Compare aliases and similar entity names.
+- Review beneficial ownership data if provided.
+- Flag shell-company patterns.
+- Flag control or affiliation risk.
+- Submit entity risk evidence packets.
 
-    Sales --> UC02
+Outputs:
 
-    Logistik --> UC07
+- Direct match result.
+- Fuzzy match result.
+- Ownership risk.
+- Alias risk.
+- Beneficial ownership confidence.
+- Evidence packets.
 
-    UC02 --> UC03
-    UC02 --> UC04
-    UC03 --> UC05
-    UC04 --> UC05
+Example:
 
-    Agent1 --> UC03
-    Agent2 --> UC04
-    Agent3 --> UC05
-
-    UC05 --> UC09
-    UC05 --> UC07
-
+```json
+{
+  "packet_id": "EP-ENTITY-002",
+  "agent": "Restricted Party & Ownership Bloodhound",
+  "claim": "No direct restricted-party match found, but ownership data is incomplete.",
+  "evidence_type": "ownership_gap",
+  "source": "buyer_profile.json",
+  "extracted_fact": "Ultimate beneficial owner field is missing.",
+  "risk_level": "MEDIUM",
+  "confidence": 0.71,
+  "challenge_status": "OPEN",
+  "requires_human_review": true
+}
 ```
 
 ---
 
-# 13. Daftar Use Case
+### 10.3 Agent 3 — Adversarial Evasion Analyst
 
-| Kode | Use Case | Aktor | Prioritas |
-| --- | --- | --- | --- |
-| UC-01 | Registrasi Remote Agent | Compliance Officer | High |
-| UC-02 | Input Order Ekspor Baru | Sales Staff | High |
-| UC-03 | Ekstrak Parameter & ECCN | Agent 1 (Manifest Deconstructor) | High |
-| UC-04 | Skrining Sanksi & Cangkang | Agent 2 (Sanctions Bloodhound) | High |
-| UC-05 | Arbitrase & Veto Keputusan | Agent 3 (Logistics Legal-Arbitrator) | High |
-| UC-06 | Override Status Penangguhan | Compliance Officer | Medium |
-| UC-07 | Monitoring Kunci Gudang | Logistics Staff | High |
-| UC-08 | Cetak Laporan Audit Trail | Compliance Officer | Medium |
-| UC-09 | Sinkronisasi Log Database | Sistem Core FastAPI / MySQL | High |
+**Role:** Defensive red-team investigator  
+**Primary Objective:** Detect possible evasion patterns, inconsistencies, and diversion risk.  
+**Personality:** Adversarial, skeptical, pattern-focused.  
+**Model Suggestion:** AI/ML API model or Featherless open-source model.
+
+Important safety framing:
+
+> This agent does not generate evasion strategies for users. It identifies defensive risk patterns so compliance teams can prevent misuse.
+
+Responsibilities:
+
+- Detect suspicious routing.
+- Detect vague or inconsistent end-use.
+- Compare declared product category with technical parameters.
+- Detect buyer with insufficient commercial history.
+- Detect possible straw-buyer patterns.
+- Detect order splitting or repeated high-risk orders.
+- Challenge weak GO recommendations.
+
+Outputs:
+
+- Evasion risk score.
+- Route anomaly score.
+- Documentation inconsistency list.
+- Cross-examination questions.
+- Evidence packets.
+
+Example:
+
+```json
+{
+  "packet_id": "EP-EVASION-003",
+  "agent": "Adversarial Evasion Analyst",
+  "claim": "Route and end-use description create unresolved diversion risk.",
+  "evidence_type": "route_enduse_inconsistency",
+  "source": "order_form",
+  "extracted_fact": "Destination is a trading intermediary; end-use field says 'general industrial monitoring' without facility details.",
+  "risk_level": "HIGH",
+  "confidence": 0.79,
+  "challenge_status": "OPEN",
+  "requires_human_review": true
+}
+```
 
 ---
 
-# 14. Use Case Specification
+### 10.4 Agent 4 — Legal-Arbitrator Judge
 
-## 14.1 UC-01 Registrasi Remote Agent
+**Role:** Decision orchestrator and final recommendation agent  
+**Primary Objective:** Read the evidence packets, resolve disputes, and issue a GO/HOLD/NO-GO recommendation.  
+**Personality:** Neutral, conservative, audit-focused.  
+**Model Suggestion:** Strong reasoning model through AI/ML API.
 
-* **Aktor:** Compliance Officer (Admin)
-* **Tujuan:** Menghubungkan script AI eksternal penggerak model ke framework Band.ai.
-* **Precondition:** Dashboard Band.ai terbuka pada menu `Connect Remote Agent`.
-* **Main Flow:** Input Agent Name, isi Deskripsi, set handle `@hilmimubarok2006/agent`, aktifkan opsi *Personal Registry Access*, simpan konfigurasi.
-* **Postcondition:** Jembatan API Key terbit, status agen berubah menjadi *Active Remote*.
+Responsibilities:
 
-## 14.2 UC-02 Input Order Ekspor Baru
+- Monitor the Band room.
+- Enforce evidence packet format.
+- Ask clarification questions to agents.
+- Classify claims as accepted, disputed, unresolved, or escalated.
+- Generate decision matrix.
+- Trigger HOLD cure pack when ambiguity remains.
+- Send final status to backend.
+- Generate audit narrative.
 
-* **Aktor:** Sales Staff
-* **Tujuan:** Mengirimkan data pengapalan barang baru ke sistem kontrol kepatuhan.
-* **Input:** Nama Perusahaan Pembeli, Alamat, Negara Tujuan, Rute Transit, Dokumen Manifes Manufaktur (PDF).
-* **Proses:** FastAPI menerima data, mengunci status gudang menjadi `PENDING_LOCK`, memicu pembuatan room Band.
-* **Audit Log:** `ORDER_INGESTED_TRACKING_INITIATED`.
+Outputs:
 
-## 14.3 UC-05 Arbitrase Debat di Band Room
+- Final recommendation.
+- Decision matrix.
+- Explanation.
+- Cure pack.
+- Human review requirement.
+- Audit report summary.
 
-* **Aktor:** Agent 3 (Logistics Legal-Arbitrator)
-* **Tujuan:** Membaca perdebatan Agen 1 & 2 di platform Band, mengambil keputusan konklusif.
-* **Main Flow:** Agen 3 memantau teks chat room. Jika Agen 1 menyatakan risiko ECCN tinggi dan Agen 2 menyatakan rute bersih, Agen 3 memutuskan status `HOLD` karena ketidakpastian tinggi, menolak opsi `GO` demi keselamatan hukum korporasi.
-* **Output:** Status ekspor dilempar ke FastAPI via REST API / Webhook.
+Example:
+
+```json
+{
+  "decision_id": "DEC-ORDER-2026-0007",
+  "decision": "HOLD",
+  "reason": "No direct restricted-party match, but technical ambiguity, incomplete ownership data, and route/end-use inconsistency remain unresolved.",
+  "accepted_claims": ["EP-TECH-004", "EP-ENTITY-002", "EP-EVASION-003"],
+  "disputed_claims": [],
+  "required_cure_pack": [
+    "End-User Certificate",
+    "Ultimate Beneficial Ownership Declaration",
+    "Non-Reexport Letter",
+    "Route Justification"
+  ],
+  "human_review_required": true
+}
+```
 
 ---
 
-# 15. Sequence Diagram
+## 11. Band Room Collaboration Model
 
-## 15.1 Sequence Proses Kepatuhan Ekspor Multi-Agent
+### 11.1 Room Creation
+
+For each new export order, the backend creates a dedicated Band room:
+
+```text
+Tribunal-Order-{ORDER_ID}
+```
+
+The room contains:
+
+- Order metadata.
+- Uploaded manifest summary.
+- Buyer data.
+- Destination and routing data.
+- Initial risk policy.
+- Agent participation rules.
+
+### 11.2 Room Participants
+
+Minimum required agents:
+
+1. Manifest Tech-Deconstructor.
+2. Restricted Party & Ownership Bloodhound.
+3. Legal-Arbitrator Judge.
+
+Preferred hackathon version:
+
+1. Manifest Tech-Deconstructor.
+2. Restricted Party & Ownership Bloodhound.
+3. Adversarial Evasion Analyst.
+4. Legal-Arbitrator Judge.
+
+### 11.3 Collaboration Phases
 
 ```mermaid
 sequenceDiagram
-    actor Sales as Sales Staff
-    participant API as FastAPI Core
-    participant Band as Band.ai Platform
-    participant Ag1 as Agent Deconstructor
-    participant Ag2 as Sanctions Bloodhound
-    participant Ag3 as Legal Arbitrator
-    participant DB as MySQL (Laragon)
-    participant Lock as Warehouse Gateway
+    participant API as FastAPI
+    participant Band as Band Room
+    participant A1 as Tech Agent
+    participant A2 as Sanctions Agent
+    participant A3 as Evasion Agent
+    participant A4 as Judge Agent
+    participant DB as Database
 
-    Sales->>API: POST /api/v1/orders (Kirim Manifes Ekspor)
-    API->>DB: Simpan Order (Status: PENDING_LOCK)
-    API->>Band: Trigger Create Room (Tribunal Room Order)
-    Band-->>API: Room Token Created
+    API->>Band: Create tribunal room
+    API->>Band: Post order context
+    Band->>A1: Request technical analysis
+    Band->>A2: Request entity screening
+    Band->>A3: Request evasion analysis
+    A1->>Band: Submit evidence packets
+    A2->>Band: Submit evidence packets
+    A3->>Band: Submit evidence packets
+    A4->>Band: Request cross-examination
+    A1->>Band: Respond to challenges
+    A2->>Band: Respond to challenges
+    A3->>Band: Respond to challenges
+    A4->>Band: Submit final decision
+    Band->>API: Decision webhook
+    API->>DB: Store decision and audit chain
+```
 
-    par Jalur Paralel Analisis Agen
-        Band->>Ag1: Kirim berkas data spesifikasi barang
-        Ag1->>Ag1: Pemrosesan Model (Featherless AI)
-        Ag1->>Band: POST Message ('ECCN Risk Detected: Dual-Use 6A003')
-    and Jalur Paralel Skrining Entitas
-        Band->>Ag2: Kirim data profil pembeli & rute
-        Ag2->>Ag2: Pemrosesan Sanksi (AI/ML API)
-        Ag2->>Band: POST Message ('Sanction Clean: No SDN match')
-    end
+### 11.4 Why Band Is Central
 
-    Band->>Ag3: Alirkan Konteks Log Debat Room
-    Ag3->>Ag3: Evaluasi Hukum & Matriks EAR
-    Ag3->>Band: POST Decision ('Final Status: HOLD - Require End-User Cert')
-    Band->>API: Callback Webhook (Status: HOLD)
-    API->>DB: Update State Order to HOLD
-    API->>Lock: Trigger Lock Mechanism (Kontainer Terkunci Otomatis)
-    Lock-->>Sales: UI Dashboard memperbarui indikator warna Kuning (HOLD)
+Band is not used as a notification channel. It is used as:
 
+- Agent room creation layer.
+- Shared context layer.
+- Agent discovery and coordination layer.
+- Evidence exchange layer.
+- Cross-examination room.
+- Decision handoff layer.
+- Audit source layer.
+
+---
+
+## 12. Evidence Packet Protocol
+
+### 12.1 Purpose
+
+The Evidence Packet Protocol ensures that agents do not produce unstructured opinions. Every important claim must be machine-readable, auditable, and challengeable.
+
+### 12.2 Packet Schema
+
+```json
+{
+  "packet_id": "EP-STRING",
+  "order_id": "ORDER-ID",
+  "room_id": "BAND-ROOM-ID",
+  "agent_id": "AGENT-ID",
+  "agent_role": "TECH | ENTITY | EVASION | JUDGE",
+  "claim": "Human-readable claim",
+  "evidence_type": "technical_parameter | sanctions_match | ownership_gap | route_anomaly | document_gap | contradiction | judge_summary",
+  "source": "document, API, form, or room message",
+  "source_pointer": "page, field, URL reference, or message id",
+  "extracted_fact": "Specific fact extracted from source",
+  "risk_level": "LOW | MEDIUM | HIGH | CRITICAL",
+  "confidence": 0.0,
+  "challenge_status": "OPEN | ACCEPTED | DISPUTED | RESOLVED | ESCALATED",
+  "challenged_by": [],
+  "requires_human_review": false,
+  "created_at": "ISO-8601 timestamp"
+}
+```
+
+### 12.3 Packet Validation Rules
+
+- Every packet must have a claim.
+- Every claim must have a source.
+- Every risk level must include confidence.
+- High and critical risk packets require judge review.
+- GO decision is invalid if high-risk packets remain unresolved.
+- HOLD decision is valid when ambiguity remains.
+- NO-GO decision requires high-confidence prohibited indicator or critical risk.
+
+### 12.4 Challenge Schema
+
+```json
+{
+  "challenge_id": "CH-STRING",
+  "target_packet_id": "EP-STRING",
+  "challenger_agent_id": "AGENT-ID",
+  "challenge_type": "insufficient_source | overclaim | contradiction | missing_context | legal_threshold_unclear",
+  "challenge_question": "What exactly is being challenged?",
+  "required_response": "Clarification, evidence, correction, or downgrade",
+  "status": "OPEN | ANSWERED | SUSTAINED | OVERRULED",
+  "created_at": "ISO-8601 timestamp"
+}
 ```
 
 ---
 
-# 16. State Diagram
+## 13. Decision Logic
 
-## 16.1 State Logika Keputusan Ekspor (Order Compliance Lifecycle)
+### 13.1 Decision States
 
-```mermaid
-stateDiagram-v2
-    [*] --> INGESTED
-    INGESTED --> PENDING_LOCK: Dokumen berhasil diekstrak
-    PENDING_LOCK --> TRIBUNAL_DEBATE: Room Band.ai aktif & agen berkumpul
-    TRIBUNAL_DEBATE --> GO_APPROVED: Kuorum agen menyatakan 100% aman
-    TRIBUNAL_DEBATE --> HOLD_SUSPENDED: Ditemukan indikasi risiko dual-use/transit
-    TRIBUNAL_DEBATE --> NO_GO_REJECTED: Pembeli positif masuk daftar SDN OFAC
+| State | Meaning |
+|---|---|
+| `PENDING_LOCK` | Order submitted and default locked pending review. |
+| `IN_TRIBUNAL` | Band room is active and agents are analyzing. |
+| `GO` | Shipment may be released based on available evidence and human/system rules. |
+| `HOLD` | Shipment cannot be released until additional documentation or review is completed. |
+| `NO_GO` | Shipment should not proceed due to high-confidence prohibited or unacceptable risk. |
+| `OVERRIDDEN_GO` | Human officer approved after HOLD with documented rationale. |
+| `OVERRIDDEN_NO_GO` | Human officer rejected after review. |
 
-    HOLD_SUSPENDED --> HITL_REVIEW: Sales unggah berkas End-User Certificate
-    HITL_REVIEW --> GO_APPROVED: Compliance Officer melakukan validasi override
-    HITL_REVIEW --> NO_GO_REJECTED: Dokumen terbukti palsu/tidak valid
+### 13.2 GO Criteria
 
-    GO_APPROVED --> WAREHOUSE_RELEASED: Webhook gerbang logistik terbuka
-    NO_GO_REJECTED --> WAREHOUSE_BLACKLISTED: Kontainer disita & masuk blacklist internal
-    WAREHOUSE_RELEASED --> [*]
-    WAREHOUSE_BLACKLISTED --> [*]
+GO may be recommended only when:
 
+- No direct restricted-party match exists.
+- Technical risk is low or sufficiently explained.
+- End-use is specific and plausible.
+- Route is consistent with buyer profile.
+- Ownership data is complete enough.
+- No unresolved high-risk evidence packets remain.
+- Judge agent signs final recommendation.
+
+### 13.3 HOLD Criteria
+
+HOLD is recommended when:
+
+- Technical classification is uncertain.
+- End-use is vague.
+- Ownership data is incomplete.
+- Buyer is new or has weak commercial history.
+- Transit route appears inconsistent.
+- Agents disagree on risk interpretation.
+- Evidence is insufficient for defensible GO.
+- Additional documents are needed.
+
+### 13.4 NO-GO Criteria
+
+NO-GO is recommended when:
+
+- Direct restricted-party match is confirmed.
+- End-user is prohibited or clearly linked to prohibited use.
+- Document forgery is detected.
+- Buyer refuses required documentation.
+- Risk remains critical after human review.
+- A prohibited destination or end-use indicator is confirmed.
+
+### 13.5 Deadlock Rule
+
+If agents cannot resolve disagreement within the maximum debate rounds, the judge must issue **HOLD**.
+
+Default rule:
+
+```text
+When uncertain, hold. Never release based on unresolved ambiguity.
+```
+
+### 13.6 Maximum Debate Rounds
+
+To prevent infinite loops and token drain:
+
+- Maximum initial analysis: 1 round per non-judge agent.
+- Maximum cross-examination: 2 rounds.
+- Maximum judge clarification: 1 round.
+- Maximum total debate cycle: 3 rounds.
+- If unresolved after round 3: automatic HOLD.
+
+---
+
+## 14. Human-in-the-Loop Workflow
+
+### 14.1 HOLD Review
+
+When the judge agent issues HOLD:
+
+1. Order status becomes `HOLD`.
+2. Warehouse release remains locked.
+3. Cure Pack is generated.
+4. Sales is notified of required documents.
+5. Compliance officer receives review task.
+6. Officer reviews evidence packets and agent transcript.
+7. Officer can request more documents, approve, or reject.
+
+### 14.2 Human Override Rules
+
+Human override must include:
+
+- Officer ID.
+- Decision.
+- Reason.
+- Documents reviewed.
+- Timestamp.
+- Optional notes.
+- New hash-chain event.
+
+### 14.3 Override Types
+
+| Override | Meaning |
+|---|---|
+| `OVERRIDDEN_GO` | Officer approves after additional evidence. |
+| `OVERRIDDEN_NO_GO` | Officer rejects shipment after review. |
+| `REQUEST_MORE_INFO` | Officer asks sales/buyer for more documentation. |
+
+### 14.4 Cure Pack Example
+
+For a high-risk thermal sensor order to an intermediary buyer:
+
+```json
+{
+  "required_documents": [
+    "End-User Certificate",
+    "Ultimate Beneficial Ownership Declaration",
+    "Non-Reexport Letter",
+    "Specific End-Use Statement",
+    "Transit Route Justification"
+  ],
+  "recommended_questions": [
+    "Who is the final facility receiving the product?",
+    "What is the exact industrial process requiring this sensor?",
+    "Will the product be re-exported?",
+    "Who owns or controls the buyer?"
+  ]
+}
 ```
 
 ---
 
-# 17. Entity Relationship Diagram
+## 15. User Stories
 
-```mermaid
-erDiagram
-    User ||--o{ Order : manages
-    User ||--o{ OverrideLog : executes
-    Order ||--|| BandRoom : instantiates
-    BandRoom ||--o{ AgentMessage : logs
-    RemoteAgent ||--o{ AgentMessage : posts
-    Order ||--|| WarehouseGate : controls
-    ECCNMaster ||--o{ Order : matches
-    SanctionList ||--o{ Order : flags
+### 15.1 Sales Staff
 
-    User {
-        int id PK
-        string username
-        string password_hash
-        string role
-        boolean is_active
-        datetime created_at
-    }
+As a Sales Staff member, I want to submit an export order and immediately see whether it is GO, HOLD, or NO-GO so that I know whether I can proceed with fulfillment.
 
-    RemoteAgent {
-        int id PK
-        string agent_name
-        string handle UK
-        string api_key_hash
-        string platform_status
-    }
+Acceptance criteria:
 
-    Order {
-        int id PK
-        string order_uuid UK
-        string buyer_name
-        string destination_country
-        string transit_routes
-        string manifest_pdf_path
-        string current_status
-        datetime ingested_at
-    }
+- Sales can input buyer, destination, route, and product manifest.
+- Sales can see current status.
+- Sales can see required documents if status is HOLD.
+- Sales cannot manually force GO.
 
-    BandRoom {
-        int id PK
-        int order_id FK
-        string band_room_token_uuid UK
-        string room_hash_chain
-        datetime initiated_at
-    }
+### 15.2 Compliance Officer
 
-    AgentMessage {
-        int id PK
-        int band_room_id FK
-        string sender_handle
-        string message_content
-        string model_inference_source
-        datetime posted_at
-    }
+As a Compliance Officer, I want to review the AI tribunal’s evidence and challenges so that I can make a defensible final decision.
 
-    WarehouseGate {
-        int id PK
-        int order_id FK
-        string physical_gate_code
-        string lock_state
-        datetime last_webhook_received
-    }
+Acceptance criteria:
 
-    ECCNMaster {
-        int id PK
-        string eccn_code UK
-        string technical_parameters_regex
-        string restriction_level
-    }
+- Officer can view evidence packets.
+- Officer can view agent debate transcript.
+- Officer can see accepted/disputed/unresolved claims.
+- Officer can approve, reject, or request more information.
+- Override requires written rationale.
 
-    SanctionList {
-        int id PK
-        string entity_name_index UK
-        string original_country
-        string source_authority
-    }
+### 15.3 Logistics Operator
 
-    OverrideLog {
-        int id PK
-        int user_id FK
-        int order_id FK
-        string reason_text
-        string authorization_hash
-        datetime executed_at
-    }
+As a Logistics Operator, I want a clear release/lock status so that I do not accidentally release a shipment under review.
 
-```
+Acceptance criteria:
+
+- Logistics sees shipment status.
+- Status is locked by default during review.
+- Only GO or OVERRIDDEN_GO releases the simulated WMS lock.
+- HOLD and NO-GO remain locked.
+
+### 15.4 Executive Reviewer
+
+As an Executive Reviewer, I want a high-level audit report so that I can understand risk posture and due diligence.
+
+Acceptance criteria:
+
+- Report shows order data.
+- Report shows final decision.
+- Report shows evidence summary.
+- Report shows human override if any.
+- Report shows hash integrity status.
 
 ---
 
-# 18. Database Design
+## 16. Functional Requirements
 
-## 18.1 Prinsip Database AegisTrade
-
-1. Log debat antar agen dari platform Band disimpan secara kronologis menggunakan tipe data text panjang dan tidak boleh diubah oleh sistem (*read-only constraint*).
-2. Nama entitas sanksi disimpan menggunakan indeks pencarian khusus untuk menghindari manipulasi karakter spasi/tanda baca oleh aktor pembeli nakal.
-3. Struktur skema database dirancang modular menggunakan platform Laragon MySQL untuk menjamin integrasi transaksional yang cepat dengan framework FastAPI.
-
-## 18.2 Python SQLAlchemy Schema Draft
-
-```python
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Text
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
-import datetime
-
-Base = declarative_base()
-
-class User(Base):
-    __tablename__ = 'users'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String(50), unique=True, nullable=False)
-    password_hash = Column(String(255), nullable=False)
-    role = Column(String(30), nullable=False) # Compliance, Sales, Logistik
-    is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
-
-class Order(Base):
-    __tablename__ = 'orders'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    order_uuid = Column(String(64), unique=True, nullable=False)
-    buyer_name = Column(String(150), nullable=False)
-    destination_country = Column(String(100), nullable=False)
-    transit_routes = Column(String(255), nullable=True)
-    manifest_pdf_path = Column(String(255), nullable=False)
-    current_status = Column(String(30), default='PENDING_LOCK') # GO, HOLD, NO-GO
-    ingested_at = Column(DateTime, default=datetime.datetime.utcnow)
-
-    room = relationship("BandRoom", uselist=False, back_populates="order")
-
-class BandRoom(Base):
-    __tablename__ = 'band_rooms'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    order_id = Column(Integer, ForeignKey('orders.id'), nullable=False)
-    band_room_token_uuid = Column(String(64), unique=True, nullable=False)
-    room_hash_chain = Column(String(128), nullable=False)
-    initiated_at = Column(DateTime, default=datetime.datetime.utcnow)
-
-    order = relationship("Order", back_populates="room")
-    messages = relationship("AgentMessage", back_populates="room")
-
-class AgentMessage(Base):
-    __tablename__ = 'agent_messages'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    band_room_id = Column(Integer, ForeignKey('band_rooms.id'), nullable=False)
-    sender_handle = Column(String(50), nullable=False) # e.g., @hilmimubarok2006/agent-deconstructor
-    message_content = Column(Text, nullable=False)
-    model_inference_source = Column(String(50), nullable=False) # Featherless_AI, AIML_API
-    posted_at = Column(DateTime, default=datetime.datetime.utcnow)
-
-    room = relationship("BandRoom", back_populates="messages")
-
-```
-
----
-
-# 19. Business Rules
-
-## 19.1 Ingestion & ECCN Validation Rules
-
-1. Dokumen manifes wajib menyertakan lembar parameter teknis spesifikasi unit.
-2. Jika Agent 1 mendeteksi kata kunci sensitif berspesifikasi militer, status order wajib dikunci menjadi `HOLD` secara otomatis tanpa menunggu respon Agen 2.
-
-## 19.2 Sanctions & Transit Rules
-
-1. Setiap entitas pembeli yang memiliki kemiripan nama di atas 85% dengan entitas SDN OFAC wajib diklasifikasikan sebagai ancaman tinggi.
-2. Semua pengapalan yang melewati atau singgah di negara kategori *High-Risk Transit Hub* wajib melalui skema peninjauan *Triple-Agent Verification Loop*.
-
-## 19.3 Multi-Agent Tribunal Rules
-
-1. Keputusan bertanda **GO** wajib disetujui secara mutlak oleh minimal 2 agen operasional (Agent 1 & Agent 2) dan disahkan secara final oleh Agent 3.
-2. Jika terjadi perdebatan buntu (*deadlock*) antara Agent 1 (Risiko Teknis) dan Agent 2 (Risiko Sanksi), Agent 3 wajib mengambil opsi paling aman bagi perusahaan, yaitu menerbitkan keputusan **HOLD**.
-
-## 19.4 Logistics Automation Rules
-
-1. Kontainer fisik tidak boleh dipindahkan dari zona karantina gudang jika sistem kontrol menerima kode status `HOLD` atau `NO-GO`.
-2. Override manual terhadap status hukum sistem hanya bisa dilakukan oleh Compliance Officer dengan menyertakan tanda tangan digital otoritas (*hash code certificate*).
-
----
-
-# 20. Functional Requirements
-
-## 20.1 Core API & Ingestion Endpoint
+### 16.1 Order Management
 
 | ID | Requirement | Priority |
-| --- | --- | --- |
-| FR-API-01 | Sistem menyediakan API endpoint aman menerima JSON order ekspor | High |
-| FR-API-02 | Sistem mengintegrasikan skema ekstraksi PDF teks otomatis | High |
-| FR-API-03 | Sistem memicu pembuatan room otonom via Band SDK | High |
+|---|---|---|
+| FR-ORD-01 | User can create new export order. | Must |
+| FR-ORD-02 | User can upload manifest or input structured product data. | Must |
+| FR-ORD-03 | System assigns unique order ID. | Must |
+| FR-ORD-04 | System sets new order to `PENDING_LOCK`. | Must |
+| FR-ORD-05 | User can view order list and status. | Must |
+| FR-ORD-06 | User can open order detail page. | Must |
 
-## 20.2 Agent Management & Framework Interaction
-
-| ID | Requirement | Priority |
-| --- | --- | --- |
-| FR-AGT-01 | Sistem memetakan handle pendaftaran `@hilmimubarok2006/agent` | High |
-| FR-AGT-02 | Agen AI mampu melakukan streaming input ke chat room Band | High |
-| FR-AGT-03 | Agent 3 mampu membaca riwayat chat room secara sekuensial | High |
-
-## 20.3 Compliance & Oversight Operations
+### 16.2 Band Room Orchestration
 
 | ID | Requirement | Priority |
-| --- | --- | --- |
-| FR-COMP-01 | Sistem menyediakan tombol override manual status HOLD | Medium |
-| FR-COMP-02 | Sistem mengekspor berkas PDF log audit terenkripsi | High |
-| FR-COMP-03 | Sistem menolak penghapusan baris data log debat | High |
+|---|---|---|
+| FR-BAND-01 | System creates a Band room per order. | Must |
+| FR-BAND-02 | System posts order context into Band room. | Must |
+| FR-BAND-03 | System invites or connects specialized agents. | Must |
+| FR-BAND-04 | Agents submit structured evidence packets through Band. | Must |
+| FR-BAND-05 | Judge agent reads room context before decision. | Must |
+| FR-BAND-06 | Room transcript is stored in backend. | Should |
+
+### 16.3 Agent Requirements
+
+| ID | Requirement | Priority |
+|---|---|---|
+| FR-AGT-01 | Tech agent extracts technical parameters. | Must |
+| FR-AGT-02 | Entity agent screens buyer and ownership risk. | Must |
+| FR-AGT-03 | Evasion agent identifies defensive risk patterns. | Should / Strong Differentiator |
+| FR-AGT-04 | Judge agent issues final recommendation. | Must |
+| FR-AGT-05 | Agents must follow Evidence Packet Protocol. | Must |
+| FR-AGT-06 | Agents can challenge evidence packets. | Should |
+| FR-AGT-07 | Debate stops after maximum rounds. | Must |
+
+### 16.4 Decision Engine
+
+| ID | Requirement | Priority |
+|---|---|---|
+| FR-DEC-01 | System supports GO/HOLD/NO-GO. | Must |
+| FR-DEC-02 | System blocks GO when high-risk unresolved packets exist. | Must |
+| FR-DEC-03 | System defaults to HOLD on deadlock. | Must |
+| FR-DEC-04 | System generates decision matrix. | Must |
+| FR-DEC-05 | System calculates defensibility score. | Should |
+| FR-DEC-06 | System generates cure pack for HOLD. | Must |
+
+### 16.5 Human Review
+
+| ID | Requirement | Priority |
+|---|---|---|
+| FR-HITL-01 | Compliance Officer can review HOLD cases. | Must |
+| FR-HITL-02 | Officer can upload or mark received documents. | Should |
+| FR-HITL-03 | Officer can approve, reject, or request more info. | Must |
+| FR-HITL-04 | Override requires written rationale. | Must |
+| FR-HITL-05 | Override is logged in audit chain. | Must |
+
+### 16.6 Warehouse Lock Simulation
+
+| ID | Requirement | Priority |
+|---|---|---|
+| FR-WMS-01 | Order starts locked. | Must |
+| FR-WMS-02 | GO releases lock. | Must |
+| FR-WMS-03 | HOLD and NO-GO keep lock active. | Must |
+| FR-WMS-04 | Dashboard shows lock state. | Must |
+| FR-WMS-05 | Webhook endpoint simulates warehouse integration. | Should |
+
+### 16.7 Audit and Reporting
+
+| ID | Requirement | Priority |
+|---|---|---|
+| FR-AUD-01 | System logs all evidence packets. | Must |
+| FR-AUD-02 | System logs all agent challenges. | Should |
+| FR-AUD-03 | System logs final decision. | Must |
+| FR-AUD-04 | System logs human override. | Must |
+| FR-AUD-05 | System generates exportable report. | Must |
+| FR-AUD-06 | System verifies hash-chain integrity. | Should |
 
 ---
 
-# 21. Non-Functional Requirements
+## 17. Non-Functional Requirements
 
-| ID | Requirement | Target |
-| --- | --- | --- |
-| NFR-01 | Waktu Proses Arbitrase Agen | Maksimal 30 detik semenjak order masuk |
-| NFR-02 | Keamanan Enkripsi Log | SHA-256 Room Hash Chain |
-| NFR-03 | Availabilitas API Inference | Integrasi ganda Featherless + AI/ML API |
-| NFR-04 | Lingkungan Database Lokal | MySQL v8.0 via Laragon Environment |
-| NFR-05 | Keamanan Akses Token | JWT Token Expired dalam 15 menit |
-| NFR-06 | Toleransi Kegagalan Jaringan | Sistem menyimpan log offline jika Band.ai mengalami interupsi |
+### 17.1 Security
 
----
+- API keys must be stored in environment variables.
+- Agent tokens must not be exposed in frontend.
+- Role-based access control should separate Sales, Compliance, and Logistics views.
+- Sensitive manifest data should only be visible to authorized roles.
 
-# 22. API Contract
+### 17.2 Reliability
 
-## 22.1 Transational Trade API Gateway
+- If an agent fails, the judge should mark the missing analysis as unresolved.
+- If Band room creation fails, order remains `PENDING_LOCK`.
+- If model API fails, status remains HOLD until rerun or manual review.
 
-| Method | Endpoint | Role | Deskripsi |
-| --- | --- | --- | --- |
-| POST | `/api/v1/compliance/orders` | Sales Staff | Ingestion order ekspor baru |
-| GET | `/api/v1/compliance/orders/:id` | All Internal Roles | Ambil status kelayakan order |
-| POST | `/api/v1/agents/connect-remote` | Compliance Officer | Daftarkan remote agent baru |
-| GET | `/api/v1/band/rooms/:room_id/logs` | Compliance Officer | Ambil salinan chat debat di Band |
-| POST | `/api/v1/compliance/override` | Compliance Officer | Lakukan override status HOLD |
-| POST | `/api/v1/warehouse/webhook-lock` | Agent Arbitrator | Tembak status kunci gerbang gudang |
+### 17.3 Performance
 
----
+MVP target:
 
-# 23. UI/UX Requirement
+- Order creation: under 3 seconds.
+- Band room creation: under 10 seconds.
+- First-pass triage: under 60 seconds.
+- Dashboard refresh: near real-time or polling every 3–5 seconds.
 
-## 23.1 Prinsip Desain Antarmuka
+Important wording:
 
-1. Desain bersih, kaku, dan berstandar korporat industri tinggi.
-2. Indikator status kelayakan (GO, HOLD, NO-GO) menggunakan sistem penandaan warna dengan kontras tajam.
-3. Tampilan log ruang sidang digital divisualisasikan mirip dengan interface percakapan multi-kolom yang scannable.
+> The MVP targets fast first-pass triage, not final legal clearance in 30 seconds.
 
-## 23.2 Token Warna (Tribunal Professional System Palette)
+### 17.4 Explainability
 
-| Nama Warna | Hex Code | Penggunaan Utama |
-| --- | --- | --- |
-| Deep Aegis Blue | `#0F172A` | Sidebar navigasi, header utama |
-| Tribunal Amber | `#D97706` | Indikator penangguhan status HOLD |
-| Enforcement Red | `#DC2626` | Pelanggaran sanksi status NO-GO |
-| Clearance Green | `#16A34A` | Order lolos status GO |
-| Charcoal Text | `#334155` | Teks deskripsi dokumen & log chat |
-| Laragon White | `#F8FAFC` | Latar belakang dashboard utama |
+Every final decision must include:
 
----
+- Main risk drivers.
+- Accepted claims.
+- Disputed claims.
+- Unresolved claims.
+- Required documents.
+- Human review status.
 
-# 24. Data Validation
+### 17.5 Auditability
 
-1. **Validasi Nomor ECCN:** Format input kode wajib tervalidasi terhadap regex standar Biro Industri dan Keamanan (BIS) AS (misal: lima karakter alfa-numerik seperti `3A001` atau `6A003`).
-2. **Validasi File Manifes:** Sistem menolak jenis file di luar format `.pdf` terenkripsi teks murni. Scan gambar mentah wajib ditolak jika tidak melewati modul OCR lokal.
-3. **Validasi Sanggahan Dokumen:** File override *End-User Certificate* wajib memiliki nomor paspor pembeli akhir yang tervalidasi 100% numerik bersih.
+Every important event must be recorded:
+
+- Order submitted.
+- Room created.
+- Agent joined.
+- Evidence submitted.
+- Challenge submitted.
+- Decision made.
+- Human override made.
+- Report exported.
 
 ---
 
-# 25. Error Handling
+## 18. Data Model
 
-| Kondisi Masalah | Mekanisme Respon Sistem |
-| --- | --- |
-| API Inference Sponsor Mati | FastAPI otomatis memindahkan beban token dari Featherless ke AI/ML API |
-| Struktur Manifes PDF Rusak | Order otomatis diberi status HOLD, sistem meminta Sales re-upload berkas |
-| Percobaan Edit Database Manual | Deteksi integritas hash gagal, dashboard memblokir fungsi rilis gerbang |
-| Akses Token Band.ai Expired | Sistem melakukan jabat tangan ulang (*re-handshake*) otomatis di latar belakang |
+### 18.1 Core Tables
+
+#### `users`
+
+| Field | Type | Description |
+|---|---|---|
+| id | UUID | User ID |
+| name | string | Full name |
+| email | string | Login email |
+| role | enum | SALES, COMPLIANCE, LOGISTICS, EXECUTIVE |
+| created_at | datetime | Creation time |
+
+#### `orders`
+
+| Field | Type | Description |
+|---|---|---|
+| id | UUID | Order ID |
+| buyer_name | string | Buyer company |
+| destination_country | string | Final destination |
+| transit_country | string | Transit route |
+| product_name | string | Product name |
+| declared_use | text | Declared end-use |
+| status | enum | PENDING_LOCK, IN_TRIBUNAL, GO, HOLD, NO_GO |
+| defensibility_score | float | Decision defensibility |
+| created_by | UUID | Sales user |
+| created_at | datetime | Creation time |
+| updated_at | datetime | Update time |
+
+#### `band_rooms`
+
+| Field | Type | Description |
+|---|---|---|
+| id | UUID | Internal room record |
+| order_id | UUID | Related order |
+| band_room_id | string | Band room identifier |
+| room_name | string | Tribunal room name |
+| status | enum | CREATED, ACTIVE, CLOSED, FAILED |
+| created_at | datetime | Creation time |
+
+#### `evidence_packets`
+
+| Field | Type | Description |
+|---|---|---|
+| id | UUID | Packet ID |
+| order_id | UUID | Related order |
+| room_id | UUID | Related room |
+| agent_id | string | Agent ID |
+| agent_role | enum | TECH, ENTITY, EVASION, JUDGE |
+| claim | text | Claim |
+| evidence_type | string | Evidence category |
+| source | string | Evidence source |
+| extracted_fact | text | Extracted fact |
+| risk_level | enum | LOW, MEDIUM, HIGH, CRITICAL |
+| confidence | float | 0.0 to 1.0 |
+| challenge_status | enum | OPEN, ACCEPTED, DISPUTED, RESOLVED, ESCALATED |
+| requires_human_review | boolean | Review flag |
+| created_at | datetime | Timestamp |
+
+#### `agent_challenges`
+
+| Field | Type | Description |
+|---|---|---|
+| id | UUID | Challenge ID |
+| target_packet_id | UUID | Evidence packet being challenged |
+| challenger_agent_id | string | Agent making challenge |
+| challenge_type | string | Type of challenge |
+| challenge_question | text | Question |
+| status | enum | OPEN, ANSWERED, SUSTAINED, OVERRULED |
+| created_at | datetime | Timestamp |
+
+#### `decisions`
+
+| Field | Type | Description |
+|---|---|---|
+| id | UUID | Decision ID |
+| order_id | UUID | Related order |
+| decision | enum | GO, HOLD, NO_GO |
+| rationale | text | Explanation |
+| accepted_claims | json | Accepted evidence IDs |
+| disputed_claims | json | Disputed evidence IDs |
+| unresolved_claims | json | Unresolved evidence IDs |
+| cure_pack | json | Required documents |
+| judge_agent_id | string | Judge agent |
+| created_at | datetime | Timestamp |
+
+#### `warehouse_gates`
+
+| Field | Type | Description |
+|---|---|---|
+| id | UUID | Gate record |
+| order_id | UUID | Related order |
+| lock_status | enum | LOCKED, RELEASED |
+| last_signal | string | Last webhook/event |
+| updated_at | datetime | Timestamp |
+
+#### `override_logs`
+
+| Field | Type | Description |
+|---|---|---|
+| id | UUID | Override ID |
+| order_id | UUID | Related order |
+| officer_id | UUID | Compliance officer |
+| previous_status | enum | Previous decision |
+| new_status | enum | Override decision |
+| rationale | text | Human explanation |
+| documents_reviewed | json | Document list |
+| created_at | datetime | Timestamp |
+
+#### `audit_chain`
+
+| Field | Type | Description |
+|---|---|---|
+| id | UUID | Audit event ID |
+| order_id | UUID | Related order |
+| event_type | string | Event category |
+| actor_type | enum | USER, AGENT, SYSTEM |
+| actor_id | string | Actor ID |
+| payload_json | json | Event data |
+| previous_hash | string | Prior event hash |
+| current_hash | string | Current hash |
+| created_at | datetime | Timestamp |
 
 ---
 
-# 26. Threat Model & Mitigasi
+## 19. API Design
 
-| Ancaman Kemanan (Threat) | Dampak Risiko | Metode Mitigasi Sistem |
-| --- | --- | --- |
-| Injeksi Agen AI Palsu di Jaringan | Manipulasi sidang hukum | Autentikasi ketat API key di menu Registry Access |
-| Modifikasi Deskripsi Manifes Teknis | Penyelundupan komponen | Agent 1 mengekstrak nomor seri fisik ke pabrik |
-| Pemalsuan Surat End-User Cert | Lolosnya sanksi sekunder | Skema HITL mewajibkan verifikasi tanda tangan digital |
-| Kegagalan Server Wi-Fi Gudang | Pintu logistik terbuka | Mekanisme kunci fisik bertipe *Fail-Secure* (Terkunci) |
+### 19.1 Order APIs
+
+```http
+POST /api/v1/orders
+```
+
+Creates a new export order and starts tribunal flow.
+
+Request:
+
+```json
+{
+  "buyer_name": "Al-Mizan Logistics",
+  "destination_country": "Oman",
+  "transit_country": "UAE",
+  "product_name": "Thermal Imaging Module",
+  "declared_use": "General industrial monitoring",
+  "manifest_file_id": "FILE-001"
+}
+```
+
+Response:
+
+```json
+{
+  "order_id": "ORDER-2026-0001",
+  "status": "PENDING_LOCK",
+  "message": "Order created and locked pending tribunal review."
+}
+```
+
+```http
+GET /api/v1/orders/{order_id}
+```
+
+Returns order detail, status, decision matrix, and warehouse lock state.
 
 ---
 
-# 27. Struktur Folder Proyek
+### 19.2 Band Orchestration APIs
+
+```http
+POST /api/v1/band/rooms/create
+```
+
+Creates tribunal room for an order.
+
+```http
+GET /api/v1/band/rooms/{room_id}/logs
+```
+
+Returns transcript and structured agent messages.
+
+---
+
+### 19.3 Evidence APIs
+
+```http
+POST /api/v1/evidence-packets
+```
+
+Stores evidence packet submitted by an agent.
+
+```http
+GET /api/v1/orders/{order_id}/evidence
+```
+
+Returns evidence packets for an order.
+
+---
+
+### 19.4 Decision APIs
+
+```http
+POST /api/v1/decisions
+```
+
+Stores judge decision.
+
+```http
+GET /api/v1/orders/{order_id}/decision
+```
+
+Returns final or current decision.
+
+---
+
+### 19.5 Human Review APIs
+
+```http
+POST /api/v1/orders/{order_id}/override
+```
+
+Human compliance override.
+
+Request:
+
+```json
+{
+  "new_status": "OVERRIDDEN_GO",
+  "rationale": "End-User Certificate and UBO declaration reviewed. Route clarified. No unresolved high-risk packet remains.",
+  "documents_reviewed": [
+    "End-User Certificate",
+    "UBO Declaration",
+    "Non-Reexport Letter"
+  ]
+}
+```
+
+---
+
+### 19.6 Warehouse Simulation APIs
+
+```http
+POST /api/v1/warehouse/webhook-lock
+```
+
+Updates simulated lock state.
+
+```http
+GET /api/v1/warehouse/orders/{order_id}/status
+```
+
+Returns lock state.
+
+---
+
+### 19.7 Report APIs
+
+```http
+GET /api/v1/orders/{order_id}/audit-report
+```
+
+Returns audit report data.
+
+```http
+GET /api/v1/orders/{order_id}/audit-report/export
+```
+
+Exports report as markdown or PDF-ready content.
+
+---
+
+## 20. Dashboard Requirements
+
+### 20.1 Main Pages
+
+1. Login page.
+2. Order intake page.
+3. Order list page.
+4. Order detail page.
+5. Tribunal live room mirror.
+6. Evidence packet table.
+7. Decision matrix.
+8. Cure pack panel.
+9. Warehouse lock panel.
+10. Human review page.
+11. Audit report page.
+
+### 20.2 Dashboard Layout for Order Detail
+
+Recommended sections:
+
+1. Header:
+   - Order ID.
+   - Buyer.
+   - Destination.
+   - Current status.
+   - Warehouse lock state.
+
+2. Risk Summary:
+   - Technical risk.
+   - Entity risk.
+   - Evasion risk.
+   - Documentation risk.
+   - Defensibility score.
+
+3. Agent Activity:
+   - Agent avatars.
+   - Current phase.
+   - Last message.
+   - Evidence count.
+
+4. Evidence Matrix:
+   - Claim.
+   - Agent.
+   - Risk.
+   - Confidence.
+   - Status.
+   - Challenge count.
+
+5. Decision Panel:
+   - GO/HOLD/NO-GO.
+   - Rationale.
+   - Required documents.
+
+6. Audit Trail:
+   - Timeline.
+   - Hash verification.
+   - Export report button.
+
+### 20.3 Status Colors
+
+| Status | Color Meaning |
+|---|---|
+| GO | Green / released |
+| HOLD | Amber / pending review |
+| NO-GO | Red / blocked |
+| PENDING_LOCK | Blue-gray / waiting |
+| IN_TRIBUNAL | Purple or blue / active analysis |
+
+---
+
+## 21. Demo Scenario
+
+### 21.1 Scenario Title
+
+**The Suspicious Thermal Sensor Export**
+
+### 21.2 Input
+
+Sales submits:
+
+```json
+{
+  "buyer_name": "Al-Mizan Logistics FZE",
+  "destination_country": "Oman",
+  "transit_country": "UAE",
+  "product_name": "Industrial Thermal Imaging Module",
+  "quantity": 1000,
+  "declared_use": "General industrial monitoring",
+  "product_specs": {
+    "detection_range": "5 km",
+    "thermal_sensitivity": "high",
+    "operating_temperature": "-40C to 85C",
+    "mounting": "drone-compatible bracket"
+  }
+}
+```
+
+### 21.3 Expected Agent Behavior
+
+#### Tech Agent
+
+Flags technical ambiguity:
+
+- Product declared as industrial sensor.
+- Range and mounting spec may require further classification review.
+- Submits medium/high technical risk evidence packet.
+
+#### Entity Agent
+
+Finds no direct restricted-party match:
+
+- Buyer not directly listed in mock screening data.
+- Ownership data incomplete or contains affiliation ambiguity.
+- Submits ownership gap packet.
+
+#### Evasion Agent
+
+Flags route/end-use inconsistency:
+
+- Buyer is a logistics intermediary.
+- End-use is vague.
+- Route involves transshipment.
+- Quantity is large.
+- Submits diversion risk packet.
+
+#### Judge Agent
+
+Final recommendation:
+
+```text
+HOLD
+```
+
+Rationale:
+
+> No direct restricted-party match was found, but technical ambiguity, incomplete ownership information, and route/end-use inconsistency make a GO decision insufficiently defensible.
+
+Cure Pack:
+
+- End-User Certificate.
+- UBO Declaration.
+- Non-Reexport Letter.
+- Route Justification.
+- Specific End-Use Statement.
+
+### 21.4 Demo Punchline
+
+The product should show:
+
+> “A single AI might say this buyer is clean. AegisTrade AI catches that the buyer being clean is not enough when the product, route, and end-use still create unresolved risk.”
+
+This is the key winning story.
+
+---
+
+## 22. Demo Script for Video
+
+### 22.1 60-Second Demo Narration
+
+> Most AI compliance tools answer one question: “Is this buyer on a list?”  
+> AegisTrade AI asks a better question: “Can this company defend the decision to release this shipment?”
+>
+> Here, a sales user submits an export order for thermal imaging modules. The order is locked by default and a Band tribunal room is created.
+>
+> Four agents join the room. The technical agent extracts product specs and flags possible dual-use ambiguity. The restricted-party agent screens the buyer and finds no direct sanctions match, but incomplete ownership data. The adversarial evasion analyst challenges the transaction because the route and end-use look too vague for a high-risk component.
+>
+> The judge agent reads the structured evidence packets, cross-examines unresolved claims, and issues HOLD, not because the order is proven illegal, but because a GO decision is not defensible yet.
+>
+> The system generates a Cure Pack, keeps the warehouse release locked, and gives the compliance officer a complete audit trail.
+>
+> AegisTrade AI is not a chatbot. It is a Band-powered compliance tribunal where agents prove, challenge, and defend high-stakes decisions.
+
+---
+
+## 23. Judging Criteria Alignment
+
+### 23.1 Application of Technology
+
+AegisTrade AI uses Band as the actual coordination layer:
+
+- Agent-to-agent collaboration happens inside Band rooms.
+- Agents exchange structured context.
+- Agents challenge one another.
+- Judge agent reads the full room state.
+- Decision handoff returns to backend.
+- Band transcript becomes part of the audit record.
+
+### 23.2 Presentation
+
+The demo is easy to understand:
+
+1. Submit risky shipment.
+2. Watch agents debate.
+3. See evidence packets.
+4. See decision matrix.
+5. See HOLD and cure pack.
+6. See human review.
+7. Export audit report.
+
+### 23.3 Business Value
+
+AegisTrade AI addresses a real enterprise workflow:
+
+- Reduces manual coordination.
+- Speeds first-pass triage.
+- Prevents accidental release.
+- Creates evidence trail.
+- Helps compliance teams prioritize risk.
+- Improves defensibility of decisions.
+
+### 23.4 Originality
+
+The project goes beyond chatbot automation by using:
+
+- Adversarial multi-agent design.
+- Evidence Packet Protocol.
+- Cross-examination.
+- Cure Pack Builder.
+- Decision Defensibility Score.
+- Tamper-evident audit chain.
+- Warehouse release lock simulation.
+
+---
+
+## 24. Success Metrics
+
+### 24.1 MVP Success Metrics
+
+| Metric | Target |
+|---|---|
+| Agents collaborating through Band | Minimum 3, target 4 |
+| Evidence packets generated per case | 3–8 |
+| Time to first recommendation | Under 60 seconds in demo |
+| HOLD cure pack generated | Yes |
+| Human override logged | Yes |
+| Audit report generated | Yes |
+| Warehouse lock simulation | Yes |
+| Demo clarity | User understands in under 2 minutes |
+
+### 24.2 Product Success Metrics
+
+| Metric | Meaning |
+|---|---|
+| Review time reduction | Faster triage compared to manual review. |
+| Evidence completeness | More decisions have documented rationale. |
+| Escalation precision | HOLD cases are based on specific missing evidence. |
+| False GO prevention | Risky ambiguous cases are held. |
+| Audit readiness | Reports can be exported quickly. |
+
+---
+
+## 25. Risk Register
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Juri menganggap ini chatbot biasa | High | Show structured evidence packets and live Band room collaboration. |
+| Legal claims terlalu berani | High | Use “recommendation”, “triage”, and “human review”, not “final legal decision”. |
+| ECCN classification terlalu kompleks | High | Frame as candidate ranking and risk flagging. |
+| OFAC ownership logic salah | High | Use cautious language and escalation, not automatic blocking unless threshold is met. |
+| Demo terlalu luas | Medium | Focus on one strong scenario. |
+| Band integration gagal saat demo | High | Prepare fallback recorded transcript and mock room mirror. |
+| Agent loop menghabiskan token | Medium | Enforce max 3 debate rounds. |
+| Dashboard kurang selesai | Medium | Prioritize order detail, evidence matrix, and decision panel. |
+| Report export gagal | Low | Export markdown first; PDF optional. |
+
+---
+
+## 26. Implementation Plan
+
+### 26.1 Build Priority
+
+#### Priority 1 — Core Demo
+
+- Create order form.
+- Create order database.
+- Create Band room per order.
+- Connect at least 3 agents.
+- Generate evidence packets.
+- Judge emits GO/HOLD/NO-GO.
+- Show status in dashboard.
+
+#### Priority 2 — Differentiators
+
+- Add Adversarial Evasion Analyst.
+- Add challenge loop.
+- Add Cure Pack Builder.
+- Add decision defensibility score.
+- Add audit report export.
+
+#### Priority 3 — Polish
+
+- Add hash-chain verification UI.
+- Add warehouse lock simulation.
+- Add role-based dashboard.
+- Add polished demo data.
+- Add submission-ready README screenshots.
+
+### 26.2 Recommended Hackathon Build Order
+
+1. Backend schema and mock order.
+2. Band room creation.
+3. Agent message format.
+4. Evidence packet table.
+5. Judge decision engine.
+6. Dashboard order detail.
+7. Cure pack display.
+8. Audit report export.
+9. Video demo script.
+10. Final README polish.
+
+---
+
+## 27. Recommended Repository Structure
 
 ```text
 aegistrade-ai/
-├── backend-fastapi/
+├── backend/
 │   ├── app/
 │   │   ├── main.py
 │   │   ├── config.py
-│   │   ├── controllers/
-│   │   │   ├── compliance_controller.py
-│   │   │   └── agent_register_controller.py
-│   │   ├── middleware/
-│   │   │   └── token_validator.py
+│   │   ├── database.py
 │   │   ├── models/
-│   │   │   └── db_models.py
+│   │   │   ├── order.py
+│   │   │   ├── band_room.py
+│   │   │   ├── evidence_packet.py
+│   │   │   ├── decision.py
+│   │   │   └── audit_chain.py
+│   │   ├── routes/
+│   │   │   ├── orders.py
+│   │   │   ├── band.py
+│   │   │   ├── evidence.py
+│   │   │   ├── decisions.py
+│   │   │   ├── warehouse.py
+│   │   │   └── reports.py
 │   │   ├── services/
-│   │   │   ├── band_sdk_service.py
-│   │   │   ├── featherless_inference.py
-│   │   │   └── aiml_api_fallback.py
-│   │   └── webhooks/
-│   │       └── warehouse_trigger.py
-│   ├── requirements.txt
-│   └── konfig.txt
-├── frontend-react/
+│   │   │   ├── band_service.py
+│   │   │   ├── evidence_service.py
+│   │   │   ├── decision_service.py
+│   │   │   ├── audit_service.py
+│   │   │   └── report_service.py
+│   │   └── agents/
+│   │       ├── tech_deconstructor.py
+│   │       ├── sanctions_bloodhound.py
+│   │       ├── evasion_analyst.py
+│   │       └── legal_arbitrator.py
+│   └── requirements.txt
+├── frontend/
 │   ├── src/
-│   │   ├── main.jsx
-│   │   ├── App.jsx
+│   │   ├── pages/
 │   │   ├── components/
-│   │   │   ├── TribunalRoomViewer.jsx
-│   │   │   └── WarehouseLockStatus.jsx
-│   │   └── pages/
-│   │       ├── DashboardCompliance.jsx
-│   │       └── ConnectRemoteAgentPage.jsx
-└── Database/
-    └── aegistrade_db.sql
-
+│   │   ├── api/
+│   │   └── lib/
+│   └── package.json
+├── demo-data/
+│   ├── thermal_sensor_order.json
+│   ├── mock_manifest.md
+│   └── mock_screening_results.json
+├── docs/
+│   ├── PRD.md
+│   ├── DEMO_SCRIPT.md
+│   └── ARCHITECTURE.md
+└── README.md
 ```
 
 ---
 
-# 28. Testing Plan
+## 28. Sample Agent Prompts
 
-1. **Functional Test Loop:** Memasukkan pesanan simulasi dengan pembeli bernama "Russian Aerospace Agency Transit Route Istanbul". Target output: Agent 2 wajib menembakkan status `NO-GO` dalam 10 detik.
-2. **Security Stress Test:** Melakukan interupsi paksa pada koneksi internet saat Agent 1 sedang menulis argumen di Band.ai. Target: Sistem mendeteksi *broken state* dan langsung memicu status `HOLD` di database Laragon.
+### 28.1 Tech Agent System Prompt
+
+```text
+You are the Manifest Tech-Deconstructor for AegisTrade AI.
+
+Your job is to inspect product descriptions and technical manifest data for possible export-control relevance. You do not make final legal classifications. You extract technical facts, identify ambiguity, and submit Evidence Packets.
+
+Rules:
+1. Do not provide legal conclusions.
+2. Do not invent facts not present in the order context.
+3. Every claim must include source and confidence.
+4. If information is missing, create a document_gap packet.
+5. If the product may be dual-use, propose candidate risk only.
+6. Output must follow the Evidence Packet Protocol JSON schema.
+```
+
+### 28.2 Entity Agent System Prompt
+
+```text
+You are the Restricted Party & Ownership Bloodhound for AegisTrade AI.
+
+Your job is to screen buyer, consignee, end-user, aliases, ownership data, and route parties for restricted-party and ownership risk. You do not declare final legality. You identify direct matches, fuzzy matches, missing ownership data, and control concerns.
+
+Rules:
+1. Distinguish direct match from fuzzy match.
+2. Do not claim automatic blocking unless evidence supports it.
+3. Missing ownership data should create HOLD risk, not automatic NO-GO.
+4. Every claim must be submitted as an Evidence Packet.
+5. Output must follow the Evidence Packet Protocol JSON schema.
+```
+
+### 28.3 Evasion Agent System Prompt
+
+```text
+You are the Adversarial Evasion Analyst for AegisTrade AI.
+
+Your job is defensive. You identify possible evasion, diversion, misclassification, or documentation inconsistency patterns so the company can prevent illegal or unsafe shipment release.
+
+You must not provide instructions for evading sanctions or export controls. You only flag risk indicators and request clarifying evidence.
+
+Rules:
+1. Look for vague descriptions, route anomalies, missing end-use, buyer inconsistency, and document gaps.
+2. Do not invent malicious intent.
+3. Escalate ambiguity as HOLD risk.
+4. Every claim must be submitted as an Evidence Packet.
+5. Output must follow the Evidence Packet Protocol JSON schema.
+```
+
+### 28.4 Judge Agent System Prompt
+
+```text
+You are the Legal-Arbitrator Judge for AegisTrade AI.
+
+Your job is to read evidence packets and challenges from the Band tribunal room, resolve claim status, and issue a GO, HOLD, or NO-GO recommendation.
+
+You do not provide final legal advice. You produce a defensible compliance recommendation.
+
+Decision rules:
+1. GO is only allowed when no high-risk unresolved packet remains.
+2. HOLD is required when ambiguity, missing documentation, ownership gaps, or unresolved challenges remain.
+3. NO-GO requires high-confidence prohibited indicator or confirmed unacceptable risk.
+4. If agents deadlock after maximum debate rounds, issue HOLD.
+5. Always generate a rationale and cure pack for HOLD.
+```
 
 ---
 
-# 29. Acceptance Criteria
+## 29. Sample Final Audit Report
 
-Sistem AegisTrade AI dinyatakan memenuhi kriteria MVP jika:
+```markdown
+# AegisTrade AI Compliance Tribunal Report
 
-1. Hub pendaftaran Remote Agent (`Connect Remote Agent Dashboard`) berfungsi normal menerima handle `@hilmimubarok2006/agent`.
-2. Minimal 3 Agen AI dapat berinteraksi di dalam satu ekosistem room Band SDK.
-3. Hasil keluaran status (GO/HOLD/NO-GO) terkirim secara akurat ke database lokal MySQL di Laragon.
-4. Perubahan status dari AI terbukti memicu simulasi penguncian/pelepas kunci gerbang logistik gudang.
+## Order
+- Order ID: ORDER-2026-0001
+- Buyer: Al-Mizan Logistics FZE
+- Destination: Oman
+- Product: Industrial Thermal Imaging Module
+- Status: HOLD
+
+## Final Recommendation
+The tribunal recommends HOLD.
+
+## Rationale
+No direct restricted-party match was found. However, the tribunal identified unresolved technical classification ambiguity, incomplete beneficial ownership data, and route/end-use inconsistency. A GO decision is not defensible until additional documentation is reviewed.
+
+## Accepted Evidence
+1. EP-TECH-004 — Product description is underspecified relative to technical range.
+2. EP-ENTITY-002 — Ownership data is incomplete.
+3. EP-EVASION-003 — Route and end-use description create unresolved diversion risk.
+
+## Disputed Evidence
+None.
+
+## Unresolved Evidence
+1. Final end-user identity.
+2. Ultimate beneficial ownership.
+3. Specific end-use and facility location.
+4. Re-export restriction acceptance.
+
+## Required Cure Pack
+1. End-User Certificate.
+2. Ultimate Beneficial Ownership Declaration.
+3. Non-Reexport Letter.
+4. Route Justification.
+5. Specific End-Use Statement.
+
+## Warehouse Status
+LOCKED.
+
+## Human Review Required
+Yes.
+
+## Audit Chain
+Integrity status: Valid.
+```
 
 ---
 
-# 30. Roadmap Implementasi
+## 30. README Positioning Copy
 
-* **Fase 1 — Fondasi & Arsitektur Jaringan Agen (Hari 1-2):** Konfigurasi awal FastAPI, setup database di Laragon, integrasi modul dasar Band SDK, pendaftaran remote agent handle.
-* **Fase 2 — Kecerdasan Agen & Rekayasa Prompt (Hari 3-4):** Integrasi API Key Featherless AI dan AI/ML API, pembuatan system prompt bertolak belakang untuk Agen 1, 2, dan 3.
-* **Fase 3 — Integrasi Logistik & Pemolesan Antarmuka (Hari 5-6):** Pembuatan dashboard React, simulasi trigger webhook penguncian gudang, penyusunan berkas laporan ekspor.
+Use this section in the public GitHub README.
+
+```markdown
+# AegisTrade AI
+
+AegisTrade AI is an adversarial multi-agent compliance tribunal for global export risk. It uses Band as the live coordination layer where specialized agents exchange structured evidence, challenge each other, and produce defensible GO/HOLD/NO-GO recommendations for high-stakes export orders.
+
+## Why It Matters
+
+Most compliance automation tools screen a list or summarize a policy. AegisTrade AI does something different: it forces agents to prove, challenge, and defend their conclusions before a shipment can be released.
+
+## Core Innovation
+
+The Evidence Packet Protocol turns agent messages into structured, auditable claims. Every agent must provide source, extracted fact, risk level, confidence, and challenge status.
+
+## Agents
+
+- Manifest Tech-Deconstructor
+- Restricted Party & Ownership Bloodhound
+- Adversarial Evasion Analyst
+- Legal-Arbitrator Judge
+
+## Demo Flow
+
+1. Sales submits a thermal sensor export order.
+2. A Band tribunal room is created.
+3. Agents analyze technical, entity, route, and evasion risk.
+4. Judge agent issues HOLD.
+5. System generates Cure Pack.
+6. Warehouse release remains locked.
+7. Compliance officer reviews and exports audit report.
+```
 
 ---
 
-# 31. Demo Scenario untuk Lomba
+## 31. Final Product Claim
 
-1. **Skenario 1: Deteksi Dual-Use Komponen Sensitif:** Sales mencoba memasukkan order ekspor sensor AC. Agent 1 mendeteksi sensor tersebut berspesifikasi militer. Sistem langsung berubah menjadi warna kuning (HOLD).
-2. **Skenario 2: Pendeteksian Jalur Transit Ilegal:** Memasukkan order dengan pembeli entitas baru di Oman. Agent 2 melacak histori kepemilikan modal dan mendeteksi korelasi dengan perusahaan sanksi internasional. Hasil akhir: Pintu gudang terkunci otomatis (NO-GO).
+The safest and strongest claim for the project:
 
----
+> AegisTrade AI helps enterprises make high-stakes export decisions more defensible by turning compliance review into a structured multi-agent investigation with evidence, challenge, escalation, and auditability.
 
-# 32. Risiko dan Mitigasi
+Avoid this claim:
 
-* **Risiko Kasus:** Biaya token API membengkak akibat perdebatan antar agen AI yang berputar-putar tanpa henti (*infinite looping debate*).
-* **Mitigasi Kasus:** Di dalam backend FastAPI Band SDK Service, sistem dipasang aturan pembatasan maksimal pertukaran argumen sebanyak **3 putaran chat**. Jika putaran ke-3 selesai tanpa kuorum, Agent 3 wajib memutus sepihak dengan keputusan teraman: **HOLD**.
+> AegisTrade AI guarantees legal compliance.
 
----
+Use this instead:
 
-# 33. Glossary
-
-* **EAR (Export Administration Regulations):** Aturan hukum federal AS yang mengendalikan ekspor barang komersial sipil yang berpotensi disalahgunakan untuk militer.
-* **Dual-Use Technology:** Barang, teknologi, atau perangkat lunak yang dirancang untuk kebutuhan komersial namun dapat dimodifikasi menjadi komponen taktis persenjataan.
-* **ECCN (Export Control Classification Number):** Kode klasifikasi lima digit alfa-numerik yang digunakan dalam EAR untuk mengidentifikasi barang yang terkena kontrol ekspor.
-* **SDN List (Specially Designated Nationals):** Daftar individu dan korporasi yang dilarang total untuk diajak berbisnis karena terafiliasi dengan aksi terorisme, pelanggaran hukum siber, atau negara agresi.
+> AegisTrade AI improves the speed, traceability, and defensibility of export compliance review while preserving human authority for final decisions.
 
 ---
 
-# 34. Penutup
+## 32. Submission Checklist
 
-AegisTrade AI dirancang sebagai solusi pertahanan legalitas korporasi tingkat tinggi yang memanfaatkan kekuatan sejati dari arsitektur multi-agent otonom pada platform **Band SDK**. Dengan menggabungkan pemrosesan dokumen parameter teknis yang mendalam bersama penyaringan sanksi geopolitik yang dinamis, sistem ini mengubah proses birokrasi kepatuhan hukum perdagangan internasional yang lambat menjadi sistem sensor otonom yang instan, aman, transparan, dan akuntabel di level rantai pasok fisik perusahaan.
+Before submitting to the hackathon, ensure the repository includes:
 
+- [ ] Public GitHub repository.
+- [ ] Clear README with product pitch.
+- [ ] Demo video.
+- [ ] Slide deck.
+- [ ] Application URL or demo instructions.
+- [ ] Screenshots.
+- [ ] Architecture diagram.
+- [ ] Agent role explanation.
+- [ ] Evidence Packet Protocol explanation.
+- [ ] Band usage explanation.
+- [ ] Business value explanation.
+- [ ] Limitations and legal disclaimer.
+- [ ] Sample demo data.
+- [ ] Setup instructions.
+- [ ] Environment variable template.
+- [ ] License.
+
+---
+
+## 33. Final Recommendation
+
+AegisTrade AI should compete as:
+
+```text
+AegisTrade AI — Adversarial Compliance Tribunal for Global Export Risk
+```
+
+The project should not be presented as a generic compliance chatbot or simple sanctions screening tool. It should be presented as a Band-native, multi-agent, evidence-driven decision workflow for high-stakes enterprise trade compliance.
+
+The winning angle is:
+
+```text
+Most agents answer.
+AegisTrade AI makes agents prove, challenge, and defend.
 ```
